@@ -27,7 +27,7 @@
     "useSass": true,
     "clientPackageManager": "npm",
     "testFrameworks": [],
-    "jhiPrefix": "jhi",
+    "jhiPrefix": "mi",
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "fa",

@@ -3,6 +3,7 @@ package com.marineindustryproj;
 import com.marineindustryproj.config.ApplicationProperties;
 import com.marineindustryproj.config.DefaultProfileUtil;
 
+import com.marineindustryproj.service.POJO.FileStorageProperties;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @SpringBootApplication
-@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
+@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class, FileStorageProperties.class})
 public class MarineindustryprojApp {
 
     private static final Logger log = LoggerFactory.getLogger(MarineindustryprojApp.class);

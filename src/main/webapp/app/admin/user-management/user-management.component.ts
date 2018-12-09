@@ -8,6 +8,7 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { Principal, UserService, User } from 'app/core';
 import { UserMgmtDeleteDialogComponent } from 'app/admin';
+import {ConvertObjectDatesService} from "app/plugin/utilities/convert-object-dates";
 
 @Component({
     selector: 'jhi-user-mgmt',
@@ -36,7 +37,8 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private eventManager: JhiEventManager,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private convertObjectDatesService : ConvertObjectDatesService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -49,6 +51,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.principal.identity().then(account => {
+
             this.currentAccount = account;
             this.loadAll();
             this.registerChangeInUsers();
@@ -134,10 +137,11 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     private onSuccess(data, headers) {
+        debugger;
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
-        this.users = data;
+        this.users = this.convertObjectDatesService.changeArrayDate(data);
     }
 
     private onError(error) {

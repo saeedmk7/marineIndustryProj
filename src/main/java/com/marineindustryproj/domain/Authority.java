@@ -1,5 +1,6 @@
 package com.marineindustryproj.domain;
 
+import com.marineindustryproj.config.Constants;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.Entity;
@@ -7,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -14,7 +16,7 @@ import java.io.Serializable;
  * An authority (a security role) used by Spring Security.
  */
 @Entity
-@Table(name = "jhi_authority")
+@Table(name = "authority")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Authority implements Serializable {
 
@@ -24,6 +26,7 @@ public class Authority implements Serializable {
     @Size(max = 50)
     @Id
     @Column(length = 50)
+    @Pattern(regexp = Constants.AUTHORITY_REGEX)
     private String name;
 
     public String getName() {

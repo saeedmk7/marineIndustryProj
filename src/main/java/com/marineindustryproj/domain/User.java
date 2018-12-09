@@ -1,5 +1,6 @@
 package com.marineindustryproj.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.marineindustryproj.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,7 +25,7 @@ import java.time.Instant;
  * A user.
  */
 @Entity
-@Table(name = "jhi_user")
+@Table(name = "app_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 
@@ -34,6 +35,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
+
+    @Column(name = "person_id")
+    private Long personId;
 
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
@@ -47,13 +51,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "password_hash", length = 60, nullable = false)
     private String password;
 
-    @Size(max = 50)
+    /*@Size(max = 50)
     @Column(name = "first_name", length = 50)
     private String firstName;
 
     @Size(max = 50)
     @Column(name = "last_name", length = 50)
-    private String lastName;
+    private String lastName;*/
 
     @Email
     @Size(min = 5, max = 254)
@@ -88,8 +92,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "jhi_user_authority",
-        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+        name = "app_user_authority",
+        joinColumns = {@JoinColumn(name = "app_user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
@@ -101,6 +105,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 
     public String getLogin() {
@@ -120,7 +132,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.password = password;
     }
 
-    public String getFirstName() {
+    /*public String getFirstName() {
         return firstName;
     }
 
@@ -134,7 +146,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
+    }*/
 
     public String getEmail() {
         return email;
@@ -222,8 +234,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "User{" +
             "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
+            /*", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +*/
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated='" + activated + '\'' +

@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IUser } from './user.model';
+import {IAuthority} from "app/shared/model/authority.model";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -31,9 +32,5 @@ export class UserService {
 
     delete(login: string): Observable<HttpResponse<any>> {
         return this.http.delete(`${this.resourceUrl}/${login}`, { observe: 'response' });
-    }
-
-    authorities(): Observable<string[]> {
-        return this.http.get<string[]>(SERVER_API_URL + 'api/users/authorities');
     }
 }

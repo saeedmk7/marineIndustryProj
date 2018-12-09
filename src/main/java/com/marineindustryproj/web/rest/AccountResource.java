@@ -80,7 +80,7 @@ public class AccountResource {
         }
     }
 
-    /**
+    /**npm
      * GET  /authenticate : check if the user is authenticated, and return its login.
      *
      * @param request the HTTP request
@@ -126,7 +126,7 @@ public class AccountResource {
         if (!user.isPresent()) {
             throw new InternalServerErrorException("User could not be found");
         }
-        userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
+        userService.updateUser(userDTO.getEmail(),
             userDTO.getLangKey(), userDTO.getImageUrl());
     }
 

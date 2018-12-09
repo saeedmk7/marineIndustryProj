@@ -4,6 +4,7 @@ import com.marineindustryproj.config.Constants;
 import com.marineindustryproj.domain.Authority;
 import com.marineindustryproj.domain.User;
 import com.marineindustryproj.repository.AuthorityRepository;
+import com.marineindustryproj.repository.PersonRepository;
 import com.marineindustryproj.repository.UserRepository;
 import com.marineindustryproj.security.AuthoritiesConstants;
 import com.marineindustryproj.security.SecurityUtils;
@@ -11,6 +12,7 @@ import com.marineindustryproj.service.dto.UserDTO;
 import com.marineindustryproj.service.util.RandomUtil;
 import com.marineindustryproj.web.rest.errors.*;
 
+import io.github.jhipster.service.filter.LongFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -41,12 +43,15 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
+    private final PersonRepository personRepository;
+
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager, PersonRepository personRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.personRepository = personRepository;
         this.cacheManager = cacheManager;
     }
 
@@ -105,8 +110,6 @@ public class UserService {
         newUser.setLogin(userDTO.getLogin().toLowerCase());
         // new user gets initially a generated password
         newUser.setPassword(encryptedPassword);
-        newUser.setFirstName(userDTO.getFirstName());
-        newUser.setLastName(userDTO.getLastName());
         newUser.setEmail(userDTO.getEmail().toLowerCase());
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
@@ -135,8 +138,6 @@ public class UserService {
     public User createUser(UserDTO userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin().toLowerCase());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail().toLowerCase());
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
@@ -166,18 +167,14 @@ public class UserService {
     /**
      * Update basic information (first name, last name, email, language) for the current user.
      *
-     * @param firstName first name of user
-     * @param lastName last name of user
      * @param email email id of user
      * @param langKey language key
      * @param imageUrl image URL of user
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateUser(String email, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
                 user.setEmail(email.toLowerCase());
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
@@ -200,12 +197,12 @@ public class UserService {
             .map(user -> {
                 this.clearUserCaches(user);
                 user.setLogin(userDTO.getLogin().toLowerCase());
-                user.setFirstName(userDTO.getFirstName());
-                user.setLastName(userDTO.getLastName());
                 user.setEmail(userDTO.getEmail().toLowerCase());
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
+                user.setPersonId(userDTO.getPersonId());
+
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()
@@ -213,6 +210,9 @@ public class UserService {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .forEach(managedAuthorities::add);
+
+                //user.setPerson(personRepository.findById(userDTO.getPersonId()).get());
+
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
                 return user;
@@ -282,8 +282,26 @@ public class UserService {
     /**
      * @return a list of all the authorities
      */
-    public List<String> getAuthorities() {
-        return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    public List<Authority> getAuthorities() {
+        /*return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());*/
+        return authorityRepository.findAll();
+    }
+    /**
+     * @return a authority
+     */
+    public Authority createAuthority(Authority authority) {
+        authorityRepository.save(authority);
+        log.debug("Created Information for Authority: {}", authority);
+        return authority;
+    }
+    /**
+     * @return a authority
+     */
+    public void deleteAuthority(String name) {
+        Authority authority = new Authority();
+        authority.setName(name);
+
+        authorityRepository.delete(authority);
     }
 
     private void clearUserCaches(User user) {

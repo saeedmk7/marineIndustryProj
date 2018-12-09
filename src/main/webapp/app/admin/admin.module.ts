@@ -1,8 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { JhiLanguageService } from 'ng-jhipster';
+import {JhiAlertService, JhiLanguageService} from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
-import { MarineindustryprojSharedModule } from 'app/shared';
+import {MarineindustryprojSharedModule} from 'app/shared';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 import {
@@ -20,11 +20,16 @@ import {
     JhiConfigurationComponent,
     JhiDocsComponent
 } from './';
+import {MarineindustryprojAuthorityModule} from "app/admin/authority/authority.module";
+import {NgSelectModule} from "@ng-select/ng-select";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
     imports: [
         MarineindustryprojSharedModule,
-        RouterModule.forChild(adminState)
+        MarineindustryprojAuthorityModule,
+        RouterModule.forChild(adminState),
+        NgSelectModule, FormsModule
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
@@ -40,6 +45,7 @@ import {
         JhiDocsComponent,
         JhiMetricsMonitoringComponent,
         JhiMetricsMonitoringModalComponent
+
     ],
     entryComponents: [UserMgmtDeleteDialogComponent, JhiHealthModalComponent, JhiMetricsMonitoringModalComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

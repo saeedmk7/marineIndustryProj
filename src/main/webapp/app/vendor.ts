@@ -1,12 +1,14 @@
 /* after changing this file run 'npm run webpack:build' */
 /* tslint:disable */
 import '../content/scss/vendor.scss';
-
+import 'jquery/dist/jquery.min'
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 // Imports all fontawesome core and solid icons
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faUser,
+    faUsers,
     faSort,
     faSortUp,
     faSortDown,
@@ -39,11 +41,40 @@ import {
     faTrashAlt,
     faAsterisk,
     faTasks,
-    faHome
+    faHome,
+    faSitemap,
+    faHotel,
+    faStamp,
+    faBuilding,
+    faToolbox,
+    faDatabase,
+    faBookOpen,
+    faChalkboardTeacher,
+    faTag,
+    faTags,
+    faFile,
+    faGlasses,
+    faReceipt,
+    faListAlt,
+    faCheckDouble,
+    faPaintRoller,
+    faUserEdit,
+    faChartArea,
+    faEnvelope,
+    faNewspaper,
+    faDownload,
+    faTv,
+    faSyncAlt,
+    faSurprise,
+    faKey,
+    faComments
 } from '@fortawesome/free-solid-svg-icons';
+
+
 
 // Adds the SVG icon to the library so you can use it in your page
 library.add(faUser);
+library.add(faUsers);
 library.add(faSort);
 library.add(faSortUp);
 library.add(faSortDown);
@@ -77,5 +108,31 @@ library.add(faCalendarAlt);
 library.add(faSearch);
 library.add(faTrashAlt);
 library.add(faAsterisk);
+library.add(faSitemap);
+library.add(faHotel);
+library.add(faStamp);
+library.add(faBuilding);
+library.add(faToolbox);
+library.add(faDatabase);
+library.add(faBookOpen);
+library.add(faChalkboardTeacher);
+library.add(faTag);
+library.add(faTags);
+library.add(faFile);
+library.add(faGlasses);
+library.add(faReceipt);
+library.add(faListAlt);
+library.add(faCheckDouble);
+library.add(faPaintRoller);
+library.add(faUserEdit);
+library.add(faChartArea);
+library.add(faNewspaper);
+library.add(faEnvelope);
+library.add(faDownload);
+library.add(faTv);
+library.add(faSyncAlt);
+library.add(faSurprise);
+library.add(faKey);
+library.add(faComments);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

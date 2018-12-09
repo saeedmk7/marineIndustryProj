@@ -14,17 +14,18 @@
         "detail": {
             "title": "کاربر"
         },
-        "login": "ورود",
+        "login": "نام کاربری",
         "firstName": "نام",
         "lastName": "نام خانوادگی",
         "email": "رایانامه",
         "activated": "فعال شده",
         "deactivated": "غیر فعال شده",
-        "profiles": "پروفایل ها",
+        "profiles": "نقش ها",
         "langKey": "زبان",
         "createdBy": "ایجاد شده با",
         "createdDate": "زمان ایجاد",
         "lastModifiedBy": "تغییر کرده با",
-        "lastModifiedDate": "آخرین زمان تغییر"
+        "lastModifiedDate": "آخرین زمان تغییر",
+        "person": "نام پرسنلی"
     }
 }

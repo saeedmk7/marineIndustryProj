@@ -25,7 +25,9 @@ export class LoginService {
                             this.languageService.changeLanguage(account.langKey);
                         }
                         resolve(data);
+
                     });
+                    window.location.reload();
                     return cb();
                 },
                 err => {

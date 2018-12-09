@@ -4,7 +4,7 @@ import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
 import { JhiLanguageHelper } from 'app/core';
 
 @Component({
-    selector: 'jhi-main',
+    selector: 'mi-main',
     templateUrl: './main.component.html'
 })
 export class JhiMainComponent implements OnInit {

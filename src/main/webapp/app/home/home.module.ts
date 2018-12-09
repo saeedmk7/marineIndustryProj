@@ -3,9 +3,12 @@ import { RouterModule } from '@angular/router';
 
 import { MarineindustryprojSharedModule } from 'app/shared';
 import { HOME_ROUTE, HomeComponent } from './';
+import {ChartModule} from "angular-highcharts";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 
 @NgModule({
-    imports: [MarineindustryprojSharedModule, RouterModule.forChild([HOME_ROUTE])],
+    imports: [MarineindustryprojSharedModule,ChartModule,BrowserAnimationsModule, RouterModule.forChild([HOME_ROUTE])],
     declarations: [HomeComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

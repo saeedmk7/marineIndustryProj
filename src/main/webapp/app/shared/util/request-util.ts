@@ -13,6 +13,14 @@ export const createRequestOption = (req?: any): HttpParams => {
                 options = options.append('sort', val);
             });
         }
+        if (req.criteria) {
+            req.criteria.forEach((criterion) => {
+                if(criterion.value)
+                    options = options.append(criterion.key, criterion.value);
+            });
+        }
+        /*options.set('entityName', req.entityName);
+        options.set('entityId', req.entityId);*/
     }
     return options;
 };

@@ -1,6 +1,7 @@
 package com.marineindustryproj.web.rest;
 
 import com.marineindustryproj.config.Constants;
+import com.marineindustryproj.domain.Authority;
 import com.marineindustryproj.domain.User;
 import com.marineindustryproj.repository.UserRepository;
 import com.marineindustryproj.security.AuthoritiesConstants;
@@ -9,6 +10,7 @@ import com.marineindustryproj.service.UserService;
 import com.marineindustryproj.service.dto.UserDTO;
 import com.marineindustryproj.web.rest.errors.BadRequestAlertException;
 import com.marineindustryproj.web.rest.errors.EmailAlreadyUsedException;
+import com.marineindustryproj.web.rest.errors.ErrorConstants;
 import com.marineindustryproj.web.rest.errors.LoginAlreadyUsedException;
 import com.marineindustryproj.web.rest.util.HeaderUtil;
 import com.marineindustryproj.web.rest.util.PaginationUtil;
@@ -29,6 +31,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * REST controller for managing users.
@@ -98,13 +102,21 @@ public class UserResource {
             throw new LoginAlreadyUsedException();
         } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
-        } else {
+        }
+
+        Long userDTOPersonId = userDTO.getPersonId();
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            Long personId = user.getPersonId();
+            if(userDTOPersonId.equals(personId)) {
+                    throw new BadRequestAlertException(ErrorConstants.PERSON_ALREADY_USED_TYPE, "Person Id already used!", "userManagement", "userexists"); //PERSON_ALREADY_USED_TYPE
+            }
+        }
             User newUser = userService.createUser(userDTO);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))
                 .body(newUser);
-        }
     }
 
     /**
@@ -128,6 +140,25 @@ public class UserResource {
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new LoginAlreadyUsedException();
         }
+        Long userDTOPersonId = userDTO.getPersonId();
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            Long personId = user.getPersonId();
+            if(user.getId() != userDTO.getId()) {
+                if (userDTOPersonId.equals(personId)) {
+                        throw new BadRequestAlertException(ErrorConstants.PERSON_ALREADY_USED_TYPE,
+                                                           "Person Id already used!",
+                                                           "userManagement",
+                                                           "userexists"); //PERSON_ALREADY_USED_TYPE
+                    }
+            }
+        }
+        /*List<User> userStream = users.stream().filter(a -> a.getPersonId() == userDTO.getPersonId()).collect(Collectors.toList());
+        //existingUser = userStream.findFirst(); //.collect(Collectors.toList())
+        if((!userStream.isEmpty()) && (!userStream.get(0).getId().equals(userDTO.getId()))){
+
+        }*/
+
         Optional<UserDTO> updatedUser = userService.updateUser(userDTO);
 
         return ResponseUtil.wrapOrNotFound(updatedUser,
@@ -146,16 +177,6 @@ public class UserResource {
         final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
-    /**
-     * @return a string list of the all of the roles
-     */
-    @GetMapping("/users/authorities")
-    @Timed
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public List<String> getAuthorities() {
-        return userService.getAuthorities();
     }
 
     /**

@@ -54,6 +54,11 @@ spring:
             enabled: false
     thymeleaf:
         mode: HTML
+    servlet:
+        multipart:
+            enabled: true
+            file-size-threshold: 2KB
+            max-file-size: 215MB
 
 server:
     servlet:
@@ -102,6 +107,9 @@ jhipster:
 logging:
     file: target/marineindustryproj.log
 
+file:
+    upload-dir: ./uploads
+    image-upload-dir: ./imageuploads
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

@@ -1,8 +1,6 @@
 export interface IUser {
     id?: any;
     login?: string;
-    firstName?: string;
-    lastName?: string;
     email?: string;
     activated?: boolean;
     langKey?: string;
@@ -12,14 +10,13 @@ export interface IUser {
     lastModifiedBy?: string;
     lastModifiedDate?: Date;
     password?: string;
+    personId?: any;
 }
 
 export class User implements IUser {
     constructor(
         public id?: any,
         public login?: string,
-        public firstName?: string,
-        public lastName?: string,
         public email?: string,
         public activated?: boolean,
         public langKey?: string,
@@ -28,12 +25,11 @@ export class User implements IUser {
         public createdDate?: Date,
         public lastModifiedBy?: string,
         public lastModifiedDate?: Date,
-        public password?: string
+        public password?: string,
+        public personId?: any
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;
-        this.firstName = firstName ? firstName : null;
-        this.lastName = lastName ? lastName : null;
         this.email = email ? email : null;
         this.activated = activated ? activated : false;
         this.langKey = langKey ? langKey : null;
@@ -43,5 +39,6 @@ export class User implements IUser {
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
         this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
         this.password = password ? password : null;
+        this.personId = personId ? personId : null;
     }
 }

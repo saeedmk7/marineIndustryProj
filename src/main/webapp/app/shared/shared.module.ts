@@ -3,14 +3,13 @@ import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgbDateMomentAdapter } from './util/datepicker-adapter';
 import {
-    MarineindustryprojSharedLibsModule,
     MarineindustryprojSharedCommonModule,
     JhiLoginModalComponent,
     HasAnyAuthorityDirective
 } from './';
 
 @NgModule({
-    imports: [MarineindustryprojSharedLibsModule, MarineindustryprojSharedCommonModule],
+    imports: [ MarineindustryprojSharedCommonModule],
     declarations: [JhiLoginModalComponent, HasAnyAuthorityDirective],
     providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
     entryComponents: [JhiLoginModalComponent],
