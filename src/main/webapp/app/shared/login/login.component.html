@@ -42,6 +42,12 @@
                         <h1 style="padding-right: 25%;">ثبت نام</h1>
                         <!--<div *ngIf="!success && !hasError">
                         </div>-->
+                        <div *ngIf="success">
+                            <h6 class="alert alert-success">ثبت نام شما با موفقیت به پایان رسید با مدیریت سامانه جهت بررسی و فعالسازی اکانت خود تماس حاصل فرمائید.</h6>
+                        </div>
+                        <div *ngIf="hasError">
+                            <p class="alert alert-danger">{{errorMessage}}</p>
+                        </div>
                     </div>
                     <div class="form-content">
                         <form>
@@ -61,12 +67,8 @@
                             <div class="form-group">
                                 <button type="button" (click)="register()">ثبت نام</button>
                             </div>
-                            <div *ngIf="success">
-                                <h6 class="alert alert-success">ثبت نام شما با موفقیت به پایان رسید با مدیریت سامانه جهت بررسی و فعالسازی اکانت خود تماس حاصل فرمائید.</h6>
-                            </div>
-                            <div *ngIf="hasError">
-                                <p class="alert alert-danger">{{errorMessage}}</p>
-                            </div>
+
+
                         </form>
                     </div>
                 </div>

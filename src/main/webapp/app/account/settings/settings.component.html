@@ -21,8 +21,8 @@
                 </div>-->
                 <div class="row" style="justify-content: center;">
                     <div class="profile-img">
-                        <img *ngIf="!isNewImage" [src]="oldPicUrl | safe" width="256" height="256" />
-                        <img *ngIf="isNewImage" [src]="picUrl | safe" style="max-width: 256px;max-height: 256px" />
+                        <img *ngIf="!isNewImage" [src]="oldPicUrl | safe" style="max-width: 200px;max-height: 300px" />
+                        <img *ngIf="isNewImage" [src]="picUrl | safe" style="max-width: 200px;max-height: 300px" />
                         <div class="file btn btn-lg btn-primary">
                             تغییر تصویر
                             <input type="file" name="file" accept=".jpg,.png,.bmp" [(ngModel)]="file" (change)="show($event,picUrl)" />
@@ -91,6 +91,31 @@
                             <label>{{jobTitle}}</label>
                         </div>
                     </div>
+                </div>
+                <div class="alert alert-info">
+                    لطفا قبل از انتخاب عکس به موارد زیر دقت نمائید.
+                    <ul>
+                        <li>
+                            نام فایل انتخابی شما نباید شامل تعداد زیادی نقطه(.) یا کاما (,) و امثالهم باشد.
+                        </li>
+                        <li>
+                            فایل شما حتما باید دارای پسوندهای مربوط به تصویر (JPG,JPEG,PNG) باشد.
+                        </li>
+                        <li>
+                            حجم تصویر انتخابی شما نباید بیش از 80 کیلوبایت باشد.
+                        </li>
+                        <li>
+                            بهترین سایز برای تصویر 400*300 پیکسل می باشد.
+                        </li>
+                        <li>
+                            اگر برای کم کردن سایز تصویر به راهنمایی نیاز دارید می توانید از ویدئو زیر استفاده نمائید.
+                        </li>
+                    </ul>
+                <a href="/content/TrainingMovie/Paint.wmv" target="_blank"
+                   class="btn btn-default btn-sm">
+                    <fa-icon [icon]="'download'"></fa-icon>
+                    <span class="d-none d-md-inline">دانلود</span>
+                </a>
                 </div>
                 <div class="row">
                     <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary center btn-margin" jhiTranslate="settings.form.button">Save</button>

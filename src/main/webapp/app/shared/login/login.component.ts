@@ -115,7 +115,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
     hasError:boolean = false;
     success:boolean= false;
     register() {
-
+        debugger;
         this.hasError = false;
         this.errorMessage = "";
         if(this.registerUserName.length < 5){
@@ -140,6 +140,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
                 registerAccount.password = this.registerPassword;
                 this.registerService.save(registerAccount).subscribe(
                     () => {
+                        debugger;
                         this.success = true;
                         this.hasError = false;
                         /*$('.form-toggle').trigger("click");*/
@@ -154,10 +155,13 @@ export class JhiLoginModalComponent implements AfterViewInit {
         this.hasError = true;
         if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
             //this.errorUserExists = 'ERROR';
-            this.errorMessage = "نام کاربری تکراریست."
+            this.errorMessage = "کاربری با این نام کاربری قبلا ثبت شده است در صورت فراموشی رمز عبور با ادمین سیستم تماس حاصل فرمائید."
         } else {
             this.errorMessage = 'خطایی رخ داده است.';
         }
+        setTimeout(() => {
+            this.hasError = false;
+        },20000)
     }
     requestResetPassword() {
         this.activeModal.dismiss('to state requestReset');
