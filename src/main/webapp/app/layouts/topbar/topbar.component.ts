@@ -134,9 +134,10 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             typeSpeed: 100,
             backSpeed: 100,
             loop: true,
-            loopCount: Infinity
+            loopCount: Infinity,
+            showCursor: false,
         }
-        var typed = new Typed("#typing", options);
+        let typed = new Typed("#typing", options);
         typed.start();
     }
 
