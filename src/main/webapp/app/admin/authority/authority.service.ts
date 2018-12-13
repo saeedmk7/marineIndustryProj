@@ -11,7 +11,7 @@ type EntityResponseType = HttpResponse<IAuthority>;
 
 @Injectable({ providedIn: 'root' })
 export class AuthorityService {
-    private resourceUrl = SERVER_API_URL + 'api/';
+    private resourceUrl = SERVER_API_URL + 'api';
 
     constructor(private http: HttpClient) {}
 

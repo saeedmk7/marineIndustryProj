@@ -57,6 +57,22 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             this.getNewRequestOrganization();
         }, 10000);
 
+        setInterval(()=>{
+            let criteria = [
+                {key: 'isActive.equals', value: true}
+            ];
+            this.beautySpeechService
+                .query({
+                    page: 0,
+                    size: 1000,
+                    criteria
+                })
+                .subscribe(
+                    (res: HttpResponse<IBeautySpeechMarineSuffix[]>) => this.showBeautySpeechResult(res.body),
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        },3600000);
+
     }
 
     ngOnInit() {
@@ -117,7 +133,6 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             strings: this.speeches,
             typeSpeed: 100,
             backSpeed: 100,
-            smartBackspace: true,
             loop: true,
             loopCount: Infinity
         }
