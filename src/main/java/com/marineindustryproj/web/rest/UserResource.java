@@ -144,7 +144,9 @@ public class UserResource {
         List<User> users = userRepository.findAll();
         for (User user : users) {
             Long personId = user.getPersonId();
-            if(user.getId() != userDTO.getId()) {
+            Long userId = user.getId();
+            Long userDTOId = userDTO.getId();
+            if(!(userId.equals(userDTOId))) {
                 if (userDTOPersonId.equals(personId)) {
                         throw new BadRequestAlertException(ErrorConstants.PERSON_ALREADY_USED_TYPE,
                                                            "Person Id already used!",

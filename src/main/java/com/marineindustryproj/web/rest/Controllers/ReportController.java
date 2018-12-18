@@ -2,6 +2,7 @@ package com.marineindustryproj.web.rest.Controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,13 +69,13 @@ public class ReportController {
 
     @RequestMapping(path = "/pdf", method = RequestMethod.GET)
     public String report() throws JRException, IOException {
-        File file = new ClassPathResource("reports/report.jrxml").getFile();
+        InputStream file = new ClassPathResource("reports/report.jrxml").getInputStream();
         //compile to .jasper
         // Compile jrxml file.
 
 
         JasperReport jasperReport = JasperCompileManager
-            .compileReport(file.toString());
+            .compileReport(file);
 
         // Parameters for report
         List<Map<String, Object>> parameters = new ArrayList<>();
@@ -133,13 +134,13 @@ public class ReportController {
     }
     @RequestMapping(path = "/finalNiazSanjiReport/{finalNiazSanjiReportId}", method = RequestMethod.GET)
     public String finalNiazSanjiReport(@PathVariable Long finalNiazSanjiReportId) throws JRException, IOException {
-        File file = new ClassPathResource("reports/finalNiazSanji.jrxml").getFile();
+        InputStream file = new ClassPathResource("reports/finalNiazSanji.jrxml").getInputStream();
         //compile to .jasper
         // Compile jrxml file.
 
 
         JasperReport jasperReport = JasperCompileManager
-            .compileReport(file.toString());
+            .compileReport(file);
 
         FinalNiazsanjiReportDTO finalNiazsanjiReportDTO = finalNiazsanjiReportService.findOne(finalNiazSanjiReportId).get();
         EducationalModuleDTO educationalModuleDTO = educationalModuleService.findOne(finalNiazsanjiReportDTO.getEducationalModuleId()).get();
