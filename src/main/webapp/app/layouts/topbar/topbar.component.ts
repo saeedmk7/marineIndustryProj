@@ -8,7 +8,6 @@ import {JhiLanguageHelper, Principal, LoginModalService, LoginService, UserServi
 import {ProfileService} from '../profiles/profile.service';
 import {RequestOrganizationNiazsanjiMarineSuffixService} from "app/entities/request-organization-niazsanji-marine-suffix";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
-import {RequestStatus} from "app/shared/model/request-organization-niazsanji-marine-suffix.model";
 
 import {PersonMarineSuffixService} from "app/entities/person-marine-suffix";
 import {PersonMarineSuffix} from "app/shared/model/person-marine-suffix.model";
@@ -16,6 +15,10 @@ import {IBeautySpeechMarineSuffix} from "app/shared/model/beauty-speech-marine-s
 import {BeautySpeechMarineSuffixService} from "app/entities/beauty-speech-marine-suffix";
 import {TypedOptions} from 'typed.js';
 import Typed from 'typed.js/src/typed.js';
+import {RequestStatus} from "app/shared/model/enums/RequestStatus";
+import * as $ from 'jquery';
+import {UsersRequestMarineSuffixService} from "app/entities/users-request-marine-suffix";
+import {RequestEducationalModuleMarineSuffixService} from "app/entities/request-educational-module-marine-suffix";
 
 @Component({
     selector: 'mi-topbar',
@@ -30,12 +33,15 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     modalRef: NgbModalRef;
     version: string;
     counter: number;
+    usersRequestCounter: number;
+    EducationalModuleRequestCounter: number;
     imgUrl: string = "";
     currentUserFullName: string;
     jobTitle: string;
     user: User;
     person: PersonMarineSuffix;
     speeches: string[];
+    isAdmin: boolean;
 
     constructor(
         private userService: UserService,
@@ -49,13 +55,14 @@ export class TopbarComponent implements OnInit, AfterViewInit {
         private router: Router,
         private requestOrganizationNiazsanjiMarineSuffixService: RequestOrganizationNiazsanjiMarineSuffixService,
         private jhiAlertService: JhiAlertService,
-        private beautySpeechService: BeautySpeechMarineSuffixService
+        private beautySpeechService: BeautySpeechMarineSuffixService,
+        private usersRequestMarineSuffixService: UsersRequestMarineSuffixService,
+        private requestEducationalModuleMarineSuffixService: RequestEducationalModuleMarineSuffixService
+
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
-        setInterval(() => {         //replaced function() by ()=>
-            this.getNewRequestOrganization();
-        }, 10000);
+
 
         setInterval(()=>{
             let criteria = [
@@ -98,22 +105,35 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
         this.principal.identity().then(account => {
-
-            if(account.imageUrl)
-            {
-                this.imgUrl = account.imageUrl;
+            debugger;
+            if(account) {
+                if(account.authorities.find(a => a == "ROLE_ADMIN") !== undefined)
+                    this.isAdmin = true;
+                if (account.imageUrl) {
+                    this.imgUrl = account.imageUrl;
+                }
+                else {
+                    this.imgUrl = "../../../content/images/home/man.png";
+                }
+                if (account.login) {
+                    this.userService.find(account.login).subscribe(
+                        (res: HttpResponse<User>) => this.onSuccess(res.body),
+                        (res: HttpResponse<any>) => this.onError(res.body)
+                    );
+                }
+                else {
+                    window.location.reload();
+                }
             }
-            else {
+            else{
                 this.imgUrl = "../../../content/images/home/man.png";
             }
-            if (account.login) {
-                this.userService.find(account.login).subscribe(
-                    (res: HttpResponse<User>) => this.onSuccess(res.body),
-                    (res: HttpResponse<any>) => this.onError(res.body)
-                );
-            }
-            else {
-                window.location.reload();
+            if(this.isAdmin) {
+                setInterval(() => {         //replaced function() by ()=>
+                    this.getNewRequestOrganization();
+                    this.getNewUsersRequest();
+                    this.getNewEducationalModuleRequest();
+                }, 10000);
             }
             /*this.currentAccount = account;
             this.loadAll();
@@ -121,26 +141,6 @@ export class TopbarComponent implements OnInit, AfterViewInit {
         });
 
     }
-
-    ngAfterViewInit() {
-
-    }
-
-    showBeautySpeechResult(result: IBeautySpeechMarineSuffix[]) {
-        this.speeches = result.map(a => a.description);
-
-        const options: TypedOptions = {
-            strings: this.speeches,
-            typeSpeed: 100,
-            backSpeed: 100,
-            loop: true,
-            loopCount: Infinity,
-            showCursor: false,
-        }
-        let typed = new Typed("#typing", options);
-        typed.start();
-    }
-
     onSuccess(body) {
         this.user = body;
         if (this.user.personId) {
@@ -169,6 +169,56 @@ export class TopbarComponent implements OnInit, AfterViewInit {
         this.jhiAlertService.error(body);
     }
 
+    ngAfterViewInit() {
+
+    }
+
+    showBeautySpeechResult(result: IBeautySpeechMarineSuffix[]) {
+        this.speeches = result.map(a => a.description);
+
+        const options: TypedOptions = {
+            strings: this.speeches,
+            typeSpeed: 100,
+            backSpeed: 100,
+            loop: true,
+            loopCount: Infinity,
+            showCursor: false,
+            backDelay: 10000
+        }
+        let typed = new Typed("#typing", options);
+        typed.start();
+    }
+    currentType: number = 0;
+    changeTyping(){
+
+        $("#typing").remove();
+        $("#typingDiv").append("<div id=\"typing\"></div>");
+        this.currentType += 1;
+        let options: TypedOptions = {
+            strings: this.speeches,
+            loop: true,
+            loopCount: Infinity,
+            typeSpeed: 100,
+            showCursor: false,
+            backDelay: 10000
+        };
+        switch (this.currentType) {
+            case 0:
+                options.backSpeed= 100;
+                break;
+            case 1:
+                options.fadeOut = true;
+                options.fadeOutDelay = true;
+                break;
+            case 2:
+                this.currentType = -1;
+                break;
+        }
+        let typed = new Typed("#typing", options);
+        typed.start();
+    }
+
+
     getNewRequestOrganization() {
         if (this.isAuthenticated()) {
             let criteria = [
@@ -181,7 +231,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
                 sort: null
             }).subscribe(
                 (res: HttpResponse<any>) => {
-                    localStorage.setItem('requestOrganizationNiazsanjiCount', res.body);
+                    //localStorage.setItem('requestOrganizationNiazsanjiCount', res.body);
                     this.counter = res.body;
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
@@ -228,4 +278,42 @@ export class TopbarComponent implements OnInit, AfterViewInit {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
     }
 
+    private getNewUsersRequest() {
+        if (this.isAuthenticated()) {
+            let criteria = [
+                {key: 'requestStatus.equals', value: RequestStatus.NEW}
+            ];
+            this.usersRequestMarineSuffixService.count({
+                page: 0,
+                size: 10000000,
+                criteria,
+                sort: null
+            }).subscribe(
+                (res: HttpResponse<any>) => {
+                    //localStorage.setItem('usersRequestCount', res.body);
+                    this.usersRequestCounter = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+        }
+    }
+    private getNewEducationalModuleRequest() {
+        if (this.isAuthenticated()) {
+            let criteria = [
+                {key: 'requestStatus.equals', value: RequestStatus.NEW}
+            ];
+            this.requestEducationalModuleMarineSuffixService.count({
+                page: 0,
+                size: 10000000,
+                criteria,
+                sort: null
+            }).subscribe(
+                (res: HttpResponse<any>) => {
+                    //localStorage.setItem('usersRequestCount', res.body);
+                    this.EducationalModuleRequestCounter = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+        }
+    }
 }

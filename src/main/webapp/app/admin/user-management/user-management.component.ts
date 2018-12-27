@@ -137,7 +137,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     private onSuccess(data, headers) {
-        debugger;
+
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;

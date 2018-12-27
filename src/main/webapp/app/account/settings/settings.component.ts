@@ -41,9 +41,9 @@ export class SettingsComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        debugger;
+
         this.principal.identity().then(account => {
-            debugger;
+
             this.settingsAccount = this.copyAccount(account);
             if(this.settingsAccount.imageUrl){
                 this.oldPicUrl = this.settingsAccount.imageUrl;
@@ -79,7 +79,7 @@ export class SettingsComponent implements OnInit {
     }
 
     onPersonError(body) {
-        debugger;
+
         this.jhiAlertService.error(body);
     }
     save() {

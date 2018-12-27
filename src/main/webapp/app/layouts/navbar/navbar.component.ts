@@ -76,30 +76,33 @@ export class NavbarComponent implements OnInit,AfterViewInit {
     }
     loadAll(){
         this.principal.identity().then(account => {
-            var ww = account.authorities;
-            let criteria = [
-                {key: 'authorityName.In', value: ww}
-            ];
-            this.navBarItemAuthorityMarineSuffixService.query( {page: 0,
-                size: 10000,
-                criteria
-            }).subscribe((res: HttpResponse<INavBarItemAuthorityMarineSuffix[]>) =>
-                {
-                    var navBarItemIds = res.body.map(function(v){
-                        return v.navBarItemId;
-                    });
-                    /*let navBarItemCriteria = [
-                        {key: 'id.In', value: navBarItemIds}
-                    ];*/
-                    this.navBarItemMarineSuffixService.query()
-                   .subscribe((res: HttpResponse<INavBarItemMarineSuffix[]>) => {
-                       this.navBarItemMarineSuffix = res.body;
-                       this.navBarItemMarineSuffix = this.navBarItemMarineSuffix.filter((a) => navBarItemIds.includes(a.id));
-                        this.list_to_tree(this.navBarItemMarineSuffix);
-                    })
-                },
-                (res: HttpErrorResponse) => this.onError(res.message))
+            if(account) {
+                let ww = account.authorities;
+                let criteria = [
+                    {key: 'authorityName.In', value: ww}
+                ];
+                this.navBarItemAuthorityMarineSuffixService.query({
+                    page: 0,
+                    size: 10000,
+                    criteria
+                }).subscribe((res: HttpResponse<INavBarItemAuthorityMarineSuffix[]>) => {
+                        let navBarItemIds = res.body.map(function (v) {
+                            return v.navBarItemId;
+                        });
+                        /*let navBarItemCriteria = [
+                            {key: 'id.In', value: navBarItemIds}
+                        ];*/
+                        this.navBarItemMarineSuffixService.query()
+                            .subscribe((res: HttpResponse<INavBarItemMarineSuffix[]>) => {
+                                this.navBarItemMarineSuffix = res.body;
+                                this.navBarItemMarineSuffix = this.navBarItemMarineSuffix.filter((a) => navBarItemIds.includes(a.id));
+                                this.list_to_tree(this.navBarItemMarineSuffix);
+                            })
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message))
+            }
         });
+
     }
 
     private list_to_tree(list) {

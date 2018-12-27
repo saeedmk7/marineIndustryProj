@@ -2,15 +2,15 @@
     <div class="row">
         <div [ngSwitch]="pageName">
             <div class="divContent" *ngSwitchCase="'home'" [@enterAnimation]>
-                <div *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_USER']" class="div-pic-home col-lg-6">
+                <div *ngIf="isUserAndAdmin" class="div-pic-home col-lg-6">
                     <img class="img-home" src="../../content/images/home/ShotTerm-Learning.png"/>
                     <div (click)="changePage('niazsanjishow')" class="niazsanjiLink" > </div>
                     <a href="#/final-niazsanji-report-marine-suffix" class="planningLink" > </a>
                     <div (click)="changePage('niazsanjishow')" class="runningLink" > </div>
                     <div (click)="changePage('niazsanjishow')" class="reportLink" > </div>
                 </div>
-                <div  class="Item1 col-lg-6 table-home">
-                    <table *jhiHasAnyAuthority="['ROLE_ADMIN','ROLE_USER']" cellspacing="2" cellpadding="0" style="border:0px;">
+                <div  class="Item1 col-lg-6 table-home" [ngClass]="{'other-user-news': !isUserAndAdmin}">
+                    <table *ngIf="isUserAndAdmin" cellspacing="2" cellpadding="0" style="border:0px;">
                         <tbody><tr>
                             <td style="width:37%;text-align:center;padding-right:15px">
                                 <a class="HomeBox" href="#" style="opacity: 1;">
@@ -61,7 +61,7 @@
                             </td>
                         </tr>
                         </tbody></table>
-                    <div id="news" class="box box-primary">
+                    <div id="news" class="box box-primary"  >
                         <div class="box-header with-border">
                             <h3 class="box-title center">اخبار</h3>
 

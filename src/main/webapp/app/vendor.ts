@@ -67,7 +67,9 @@ import {
     faSyncAlt,
     faSurprise,
     faKey,
-    faComments
+    faComments,
+    faMarker,
+    faStickyNote
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -134,5 +136,7 @@ library.add(faSyncAlt);
 library.add(faSurprise);
 library.add(faKey);
 library.add(faComments);
+library.add(faMarker);
+library.add(faStickyNote);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

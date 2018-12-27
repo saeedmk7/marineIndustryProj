@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.DefaultProblem;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ProblemBuilder;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+import static com.marineindustryproj.web.rest.errors.ErrorConstants.ERR_DELETION;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
@@ -42,16 +45,32 @@ public class ExceptionTranslator implements ProblemHandling {
         if (!(problem instanceof ConstraintViolationProblem || problem instanceof DefaultProblem)) {
             return entity;
         }
-        ProblemBuilder builder = Problem.builder()
+        ProblemBuilder builder;
+        if(entity.getStatusCode().value() == 500) {
+            if(entity.getBody().getDetail().contains("nested exception is org.hibernate.exception.ConstraintViolationException")) {
+                builder = Problem.builder()
+                    .withStatus(problem.getStatus())
+                    .withTitle(ERR_DELETION)
+                    .with("path",
+                          request.getNativeRequest(HttpServletRequest.class).getRequestURI());
+                return new ResponseEntity<>(builder.build(),
+                                            entity.getHeaders(),
+                                            entity.getStatusCode());
+            }
+        }
+        builder = Problem.builder()
             .withType(Problem.DEFAULT_TYPE.equals(problem.getType()) ? ErrorConstants.DEFAULT_TYPE : problem.getType())
             .withStatus(problem.getStatus())
             .withTitle(problem.getTitle())
-            .with("path", request.getNativeRequest(HttpServletRequest.class).getRequestURI());
+            .with("path",
+                  request.getNativeRequest(HttpServletRequest.class).getRequestURI());
 
         if (problem instanceof ConstraintViolationProblem) {
             builder
-                .with("violations", ((ConstraintViolationProblem) problem).getViolations())
-                .with("message", ErrorConstants.ERR_VALIDATION);
+                .with("violations",
+                      ((ConstraintViolationProblem) problem).getViolations())
+                .with("message",
+                      ErrorConstants.ERR_VALIDATION);
         } else {
             builder
                 .withCause(((DefaultProblem) problem).getCause())
@@ -59,7 +78,8 @@ public class ExceptionTranslator implements ProblemHandling {
                 .withInstance(problem.getInstance());
             problem.getParameters().forEach(builder::with);
             if (!problem.getParameters().containsKey("message") && problem.getStatus() != null) {
-                builder.with("message", "error.http." + problem.getStatus().getStatusCode());
+                builder.with("message",
+                             "error.http." + problem.getStatus().getStatusCode());
             }
         }
         return new ResponseEntity<>(builder.build(), entity.getHeaders(), entity.getStatusCode());
@@ -90,7 +110,14 @@ public class ExceptionTranslator implements ProblemHandling {
             .build();
         return create(ex, problem, request);
     }
-
+    /*@ExceptionHandler
+    public ResponseEntity<Problem> handleInternalServerException(InternalServerErrorException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.INTERNAL_SERVER_ERROR)
+            .with("message", ErrorConstants.ERR_DELETION)
+            .build();
+        return create(ex, problem, request);
+    }*/
     @ExceptionHandler
     public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex, NativeWebRequest request) {
         return create(ex, request, HeaderUtil.createFailureAlert(ex.getEntityName(), ex.getErrorKey(), ex.getMessage()));

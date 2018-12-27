@@ -22,7 +22,13 @@ public final class HeaderUtil {
         headers.add("X-" + APPLICATION_NAME + "-params", param);
         return headers;
     }
-
+    public static HttpHeaders cannotDeleteAlert(String message){
+        HttpHeaders headers = new HttpHeaders();
+        if(message.isEmpty())
+            message = "امکان حذف رکورد انتخابی شما به دلیل استفاده از آن در قسمت های مختلف سیستم وجود ندارد.";
+        headers.add("X-" + APPLICATION_NAME + "-alert", message);
+        return headers;
+    }
     public static HttpHeaders createEntityCreationAlert(String entityName, String param) {
         return createAlert(APPLICATION_NAME + "." + entityName + ".created", param);
     }

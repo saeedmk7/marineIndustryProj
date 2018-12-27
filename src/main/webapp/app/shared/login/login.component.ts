@@ -115,7 +115,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
     hasError:boolean = false;
     success:boolean= false;
     register() {
-        debugger;
+
         this.hasError = false;
         this.errorMessage = "";
         if(this.registerUserName.length < 5){
@@ -140,7 +140,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
                 registerAccount.password = this.registerPassword;
                 this.registerService.save(registerAccount).subscribe(
                     () => {
-                        debugger;
+
                         this.success = true;
                         this.hasError = false;
                         /*$('.form-toggle').trigger("click");*/

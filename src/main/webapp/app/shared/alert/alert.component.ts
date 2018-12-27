@@ -18,6 +18,7 @@ export class JhiAlertComponent implements OnInit, OnDestroy {
     constructor(private alertService: JhiAlertService) {}
 
     ngOnInit() {
+
         this.alerts = this.alertService.get();
     }
 

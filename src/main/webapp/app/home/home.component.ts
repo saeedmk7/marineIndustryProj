@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
     niazsanjishow: boolean = false;
     eventSubscriber: Subscription;
     pageName: string;
+    isUserAndAdmin: boolean;
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
@@ -63,12 +64,12 @@ export class HomeComponent implements OnInit {
     }
     deleteElement(i)
     {
-        debugger;
+
         $('#' + i).remove();
     }
     toggleColappse(i)
     {
-        debugger;
+
         $('#' + i).collapse('toggle');
     }
     getParameterByName(name, url) {
@@ -81,14 +82,21 @@ export class HomeComponent implements OnInit {
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
     ngOnInit() {
-        this.principal.identity().then((account) => {
-            this.account = account;
 
+        this.principal.identity().then((account) => {
+        debugger;
+            this.account = account;
+           
             if(!this.isAuthenticated()){
                 this.login();
             }
+             const authorities: string[] = ['ROLE_ADMIN'];
+            for (let i = 0; i < authorities.length; i++) {
+                if (this.account.authorities.includes(authorities[i])) {
+                    this.isUserAndAdmin = true;
+                }
+            }
         });
-
         this.registerAuthenticationSuccess();
         let criteria = [
             {key: 'isActive.equals', value: true}

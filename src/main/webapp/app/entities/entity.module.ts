@@ -5,6 +5,7 @@ import { MarineindustryprojTeacherMarineSuffixModule } from './teacher-marine-su
 import { MarineindustryprojJobMarineSuffixModule } from './job-marine-suffix/job-marine-suffix.module';
 import { MarineindustryprojOrganizationChartMarineSuffixModule } from './organization-chart-marine-suffix/organization-chart-marine-suffix.module';
 import { MarineindustryprojEducationalModuleMarineSuffixModule } from './educational-module-marine-suffix/educational-module-marine-suffix.module';
+import { MarineindustryprojRequestEducationalModuleMarineSuffixModule } from './request-educational-module-marine-suffix/request-educational-module-marine-suffix.module';
 import { MarineindustryprojEducationalModuleJobMarineSuffixModule } from './educational-module-job-marine-suffix/educational-module-job-marine-suffix.module';
 import { MarineindustryprojEducationalCenterMarineSuffixModule } from './educational-center-marine-suffix/educational-center-marine-suffix.module';
 import { MarineindustryprojResourceMarineSuffixModule } from './resource-marine-suffix/resource-marine-suffix.module';
@@ -62,6 +63,7 @@ import { MarineindustryprojAnnouncementMarineSuffixModule } from './announcement
 import { MarineindustryprojNavBarItemMarineSuffixModule } from './nav-bar-item-marine-suffix/nav-bar-item-marine-suffix.module';
 import { MarineindustryprojNavBarItemAuthorityMarineSuffixModule } from './nav-bar-item-authority-marine-suffix/nav-bar-item-authority-marine-suffix.module';
 import { MarineindustryprojBeautySpeechMarineSuffixModule } from './beauty-speech-marine-suffix/beauty-speech-marine-suffix.module';
+import { MarineindustryprojUsersRequestMarineSuffixModule } from './users-request-marine-suffix/users-request-marine-suffix.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -72,6 +74,7 @@ import { MarineindustryprojBeautySpeechMarineSuffixModule } from './beauty-speec
         MarineindustryprojJobMarineSuffixModule,
         MarineindustryprojOrganizationChartMarineSuffixModule,
         MarineindustryprojEducationalModuleMarineSuffixModule,
+        MarineindustryprojRequestEducationalModuleMarineSuffixModule,
         MarineindustryprojEducationalModuleJobMarineSuffixModule,
         MarineindustryprojEducationalCenterMarineSuffixModule,
         MarineindustryprojResourceMarineSuffixModule,
@@ -126,6 +129,7 @@ import { MarineindustryprojBeautySpeechMarineSuffixModule } from './beauty-speec
         MarineindustryprojNavBarItemMarineSuffixModule,
         MarineindustryprojNavBarItemAuthorityMarineSuffixModule,
         MarineindustryprojBeautySpeechMarineSuffixModule,
+        MarineindustryprojUsersRequestMarineSuffixModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

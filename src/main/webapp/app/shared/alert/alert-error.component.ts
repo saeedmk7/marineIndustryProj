@@ -22,7 +22,9 @@ export class JhiAlertErrorComponent implements OnDestroy {
         /* tslint:enable */
         this.alerts = [];
 
+
         this.cleanHttpErrorListener = eventManager.subscribe('marineindustryprojApp.httpError', response => {
+
             let i;
             const httpErrorResponse = response.content;
             switch (httpErrorResponse.status) {
@@ -77,7 +79,13 @@ export class JhiAlertErrorComponent implements OnDestroy {
                 default:
                     if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
                         this.addErrorAlert(httpErrorResponse.error.message);
-                    } else {
+                    } else if(httpErrorResponse.error !== '' && httpErrorResponse.error.title) {
+                        this.addErrorAlert(httpErrorResponse.error.title);
+                    }
+                    else if(httpErrorResponse.error !== '' && httpErrorResponse.error.detail){
+                        this.addErrorAlert(httpErrorResponse.error.detail);
+                    }
+                    else{
                         this.addErrorAlert(httpErrorResponse.error);
                     }
             }
@@ -99,6 +107,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
     }
 
     addErrorAlert(message, key?, data?) {
+
         key = key && key !== null ? key : message;
         this.alerts.push(
             this.alertService.addAlert(

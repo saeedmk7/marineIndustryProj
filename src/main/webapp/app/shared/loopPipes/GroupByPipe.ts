@@ -5,10 +5,10 @@ import { DomSanitizer} from '@angular/platform-browser';
 export class GroupByPipe implements PipeTransform {
     constructor() {}
     transform(array: Array<any>, field) {
-        debugger;
+
         if (array) {
             const groupedObj = array.reduce((prev, cur) => {
-                debugger;
+
                 if (!prev[cur[field]]) {
                     prev[cur[field]] = [cur];
                 } else {
@@ -16,7 +16,7 @@ export class GroupByPipe implements PipeTransform {
                 }
                 return prev;
             }, {});
-            debugger;
+
             var result = Object.keys(groupedObj).map(key => ({ key, value: groupedObj[key] }));
             return result;
         }
