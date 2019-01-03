@@ -25,8 +25,14 @@ export class JhiAlertErrorComponent implements OnDestroy {
 
         this.cleanHttpErrorListener = eventManager.subscribe('marineindustryprojApp.httpError', response => {
 
+            /*if(response.status === 504 && response.statusText === 'Gateway Timeout'){
+                this.eventManager.broadcast({ name: 'marineindustryprojApp.httpError', content: err });
+            }*/
+            debugger;
+            console.log("hello fuck you saeed");
             let i;
             const httpErrorResponse = response.content;
+
             switch (httpErrorResponse.status) {
                 // connection refused, server not reachable
                 case 0:
@@ -76,6 +82,10 @@ export class JhiAlertErrorComponent implements OnDestroy {
                     this.addErrorAlert('Not found', 'error.url.not.found');
                     break;
 
+                case (500 > httpErrorResponse.status) && (httpErrorResponse.status < 599):
+                    this.addErrorAlert('سرور در دسترس نیست',"marineindustryprojApp.error.ServerIsUnavailable");
+                    break;
+
                 default:
                     if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
                         this.addErrorAlert(httpErrorResponse.error.message);
@@ -100,7 +110,9 @@ export class JhiAlertErrorComponent implements OnDestroy {
     }
 
     ngOnDestroy() {
+
         if (this.cleanHttpErrorListener !== undefined && this.cleanHttpErrorListener !== null) {
+
             this.eventManager.destroy(this.cleanHttpErrorListener);
             this.alerts = [];
         }

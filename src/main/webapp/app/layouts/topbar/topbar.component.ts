@@ -105,7 +105,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
         this.principal.identity().then(account => {
-            debugger;
+
             if(account) {
                 if(account.authorities.find(a => a == "ROLE_ADMIN") !== undefined)
                     this.isAdmin = true;
@@ -240,6 +240,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     }
 
     onError(str) {
+        debugger;
         this.jhiAlertService.error(str);
     }
 

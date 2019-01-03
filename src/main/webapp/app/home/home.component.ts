@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
 
         this.principal.identity().then((account) => {
-        debugger;
+
             this.account = account;
            
             if(!this.isAuthenticated()){

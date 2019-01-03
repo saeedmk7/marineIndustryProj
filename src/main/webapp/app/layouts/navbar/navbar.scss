@@ -2,7 +2,8 @@
 .sidebarMenu {
     height: calc(100vh - 50px);
     z-index: 999;
-    background: linear-gradient(to top right, rgba(0, 174, 239, 1) , rgba(34, 209, 119, 0.8)),  url("../../../content/images/navbar/sidebar-1.jpg") top center;
+    /*background: linear-gradient(to top right, rgba(247, 27, 57, 0.81) , rgba(255, 106, 0, 0.8)),  url("../../../content/images/navbar/sidebar-1.jpg") top center;*/
+    background: linear-gradient(to top right, rgba(0, 0, 0, 0.85) , rgba(0, 0, 0, 0.6)),  url("../../../content/images/navbar/sidebar-1.jpg") top center;
 }
 .sidebarMenu .companyLogo {
     width: 70%;

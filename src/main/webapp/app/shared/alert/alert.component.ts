@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { JhiAlertService } from 'ng-jhipster';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {JhiAlertService, JhiTranslateComponent} from 'ng-jhipster';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
     selector: 'mi-alert',
@@ -15,18 +16,33 @@ import { JhiAlertService } from 'ng-jhipster';
 export class JhiAlertComponent implements OnInit, OnDestroy {
     alerts: any[];
 
-    constructor(private alertService: JhiAlertService) {}
+    constructor(private alertService: JhiAlertService,
+        private translateService: TranslateService) {
+    }
 
     ngOnInit() {
-
+        debugger;
         this.alerts = this.alertService.get();
     }
 
     setClasses(alert) {
-        return {
-            toast: !!alert.toast,
-            [alert.position]: true
-        };
+        debugger;
+        if (alert.msg.includes("504 Gateway Timeout")) {
+            this.translateService.get("error.ServerIsUnavailable").subscribe((resp) => {
+                debugger;
+                alert.msg = resp;
+                return {
+                    toast: !!alert.toast,
+                    [alert.position]: true
+                };
+            });
+        }
+        else {
+            return {
+                toast: !!alert.toast,
+                [alert.position]: true
+            };
+        }
     }
 
     ngOnDestroy() {

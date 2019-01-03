@@ -11,6 +11,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             tap(
                 (event: HttpEvent<any>) => {},
                 (err: any) => {
+                    debugger;
                     if (err instanceof HttpErrorResponse) {
                         if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('/api/account'))))) {
                             if (this.eventManager !== undefined) {
