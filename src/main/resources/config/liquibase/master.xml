@@ -102,6 +102,8 @@
     <include file="config/liquibase/changelog/20181223172518_update_entity_EducationalModule.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181223172317_added_entity_constraints_RequestEducationalModule.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181223172412_added_entity_constraints_UsersRequest.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181223172552_update_entity_EducationalModule.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181223172552_update_entity_FieldOfStudy.xml" relativeToChangelogFile="false"/>
 
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

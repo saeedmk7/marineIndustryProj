@@ -6,6 +6,7 @@ import { ITEMS_PER_PAGE } from 'app/shared';
 export class PaginationConfig {
     // tslint:disable-next-line: no-unused-variable
     constructor(private config: NgbPaginationConfig) {
+
         config.boundaryLinks = true;
         config.maxSize = 5;
         config.pageSize = ITEMS_PER_PAGE;

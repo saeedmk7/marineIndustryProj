@@ -26,6 +26,7 @@ export class UserMgmtUpdateComponent implements OnInit {
     people: IPersonMarineSuffix[];
     error:boolean = false;
 
+
     constructor(
         private jhiAlertService: JhiAlertService,
         private languageHelper: JhiLanguageHelper,
@@ -82,6 +83,7 @@ export class UserMgmtUpdateComponent implements OnInit {
     save() {
 
         this.isSaving = true;
+
         if(this.user.personId === null)
         {
             this.onError("لطفا پرسنل مورد نظر را مشخص نمائید.");
@@ -91,8 +93,15 @@ export class UserMgmtUpdateComponent implements OnInit {
         this.user.email = this.user.login + "@amoozeshMarineIndustry.com";
         this.user.langKey = 'fa';
         if (this.user.id !== null) {
+
             this.userService.update(this.user).subscribe(response => this.onSaveSuccess(response), (response) => this.onSaveError(response));
         } else {
+            if(!this.user.password)
+            {
+                this.onError("لطفا رمز عبور را مشخص نمائید.");
+                this.isSaving = false;
+                return;
+            }
             this.userService.create(this.user).subscribe(response => this.onSaveSuccess(response), (response) => this.onSaveError(response));
         }
     }

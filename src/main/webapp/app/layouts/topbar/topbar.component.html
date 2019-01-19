@@ -2,9 +2,10 @@
     <div class="col-xs-12 bgWhite lightShadow topMenu">
         <ul class="nav justify-content-end" style="padding-inline-start: 0px;">
             <li class="nav-item" style="flex-grow: 1">
-                <button (click)="changeTyping()" style="display: inline" class="btn btn-sm btn-info">تغییر حالت</button>
-                <div id="typingDiv" class="typingClass">
-                    <div id="typing"></div>
+                <!--<button (click)="changeTyping()" style="display: inline" class="btn btn-sm btn-info">تغییر حالت</button>-->
+                <div id="typingDiv" class="typingClass" [@enterAnimation] *ngIf="show">
+                    <!--<div id="typing"></div>-->
+                    {{currentSpeech}}
                 </div>
 
             </li>

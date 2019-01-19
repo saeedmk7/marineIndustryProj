@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {JhiEventManager, JhiDateUtils, JhiLanguageService, JhiAlertService} from 'ng-jhipster';
 
@@ -25,7 +25,7 @@ import * as $ from 'jquery';
     ],
     animations: [SlideInOutAnimation]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
     account: Account;
     modalRef: NgbModalRef;
    /* welcomeState = 'out';
@@ -53,13 +53,12 @@ export class HomeComponent implements OnInit {
         this.isfa = languageManager.currentLang == 'fa';
 
 
-        router.events.subscribe((val : NavigationStart) => {
-
-            let res = this.getParameterByName("pageName",val.url); //window.location.href;
-            if(res)
-                this.pageName = res;
-            else
-                this.pageName = 'home';
+        this.eventSubscriber = router.events.subscribe((val : NavigationStart) => {
+                let res = this.getParameterByName("pageName", val.url); //window.location.href;
+                if (res)
+                    this.pageName = res;
+                else
+                    this.pageName = 'home';
         });
     }
     deleteElement(i)
@@ -80,6 +79,18 @@ export class HomeComponent implements OnInit {
         if (!results) return null;
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+    changePage(pageName){
+
+        var url = window.location.href;
+        var indexOf = url.indexOf('?');
+        if (indexOf > -1) {
+            var extra = url.slice(indexOf, url.length);
+            url = url.replace(extra, '');
+        }
+        url += '?';
+        url = url + "pageName=" + pageName;
+        window.location.href = url;
     }
     ngOnInit() {
 
@@ -146,18 +157,7 @@ export class HomeComponent implements OnInit {
         result.setDate(result.getDate() + days);
         return result;
     }
-    changePage(pageName){
 
-            var url = window.location.href;
-            var indexOf = url.indexOf('?');
-            if (indexOf > -1) {
-                var extra = url.slice(indexOf, url.length);
-                url = url.replace(extra, '');
-            }
-            url += '?';
-            url = url + "pageName=" + pageName;
-            window.location.href = url;
-    }
     back2Main(){
         this.niazsanjishow = false;
 
@@ -199,5 +199,9 @@ export class HomeComponent implements OnInit {
     // add point to chart serie
     add() {
         this.chart.addPoint(Math.floor(Math.random() * 10));
+    }
+
+    ngOnDestroy(): void {
+        this.eventManager.destroy(this.eventSubscriber);
     }
 }

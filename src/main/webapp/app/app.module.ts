@@ -33,7 +33,8 @@ import {HttpClientModule} from '@angular/common/http';
         MarineindustryprojHomeModule,
         MarineindustryprojAccountModule,
         MarineindustryprojEntityModule,
-        HttpClientModule
+        HttpClientModule,
+
 
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],

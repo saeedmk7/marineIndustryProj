@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {JhiAlertService, JhiLanguageService} from 'ng-jhipster';
@@ -19,13 +19,15 @@ import {RequestStatus} from "app/shared/model/enums/RequestStatus";
 import * as $ from 'jquery';
 import {UsersRequestMarineSuffixService} from "app/entities/users-request-marine-suffix";
 import {RequestEducationalModuleMarineSuffixService} from "app/entities/request-educational-module-marine-suffix";
+import {SlideInOutAnimation} from "app/shared/animations";
 
 @Component({
     selector: 'mi-topbar',
     templateUrl: './topbar.component.html',
-    styleUrls: ['topbar.scss']
+    styleUrls: ['topbar.scss'],
+    animations: [SlideInOutAnimation]
 })
-export class TopbarComponent implements OnInit, AfterViewInit {
+export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
     inProduction: boolean;
     isNavbarCollapsed: boolean;
     languages: any[];
@@ -42,7 +44,11 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     person: PersonMarineSuffix;
     speeches: string[];
     isAdmin: boolean;
-
+    intervals: any;
+    dailyIntervals: any;
+    speechIntervals: any;
+    currentSpeech: string;
+    show: boolean = true;
     constructor(
         private userService: UserService,
         private personMarineSuffixService: PersonMarineSuffixService,
@@ -64,7 +70,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
         this.isNavbarCollapsed = true;
 
 
-        setInterval(()=>{
+        this.dailyIntervals = setInterval(()=>{
             let criteria = [
                 {key: 'isActive.equals', value: true}
             ];
@@ -129,11 +135,14 @@ export class TopbarComponent implements OnInit, AfterViewInit {
                 this.imgUrl = "../../../content/images/home/man.png";
             }
             if(this.isAdmin) {
-                setInterval(() => {         //replaced function() by ()=>
+                this.intervals = setInterval(() => {         //replaced function() by ()=>
                     this.getNewRequestOrganization();
                     this.getNewUsersRequest();
                     this.getNewEducationalModuleRequest();
-                }, 10000);
+                }, 30000);
+                /*setInterval(this.getNewRequestOrganization(),30000);
+                setInterval(this.getNewUsersRequest(),20000);
+                setInterval(this.getNewEducationalModuleRequest(),40000);*/
             }
             /*this.currentAccount = account;
             this.loadAll();
@@ -172,11 +181,30 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
 
     }
+    sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+    }
 
     showBeautySpeechResult(result: IBeautySpeechMarineSuffix[]) {
         this.speeches = result.map(a => a.description);
+        let index = 0;
+        this.currentSpeech = this.speeches[index];
+        this.speechIntervals = setInterval(() => {
 
-        const options: TypedOptions = {
+            index++;
+            this.show = false;
+            this.sleep(1000).then(() =>{
+                this.show = true;
+            });
+            if(this.speeches.length > index)
+            {
+                this.currentSpeech = this.speeches[index];
+            }
+            else{
+                index = 0;
+            }
+        }, 120000); //
+        /*const options: TypedOptions = {
             strings: this.speeches,
             typeSpeed: 100,
             backSpeed: 100,
@@ -186,7 +214,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             backDelay: 10000
         }
         let typed = new Typed("#typing", options);
-        typed.start();
+        typed.start();*/
     }
     currentType: number = 0;
     changeTyping(){
@@ -226,7 +254,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             ];
             this.requestOrganizationNiazsanjiMarineSuffixService.count({
                 page: 0,
-                size: 10000000,
+                size: 2000,
                 criteria,
                 sort: null
             }).subscribe(
@@ -240,7 +268,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
     }
 
     onError(str) {
-        debugger;
+
         this.jhiAlertService.error(str);
     }
 
@@ -286,7 +314,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             ];
             this.usersRequestMarineSuffixService.count({
                 page: 0,
-                size: 10000000,
+                size: 2000,
                 criteria,
                 sort: null
             }).subscribe(
@@ -305,7 +333,7 @@ export class TopbarComponent implements OnInit, AfterViewInit {
             ];
             this.requestEducationalModuleMarineSuffixService.count({
                 page: 0,
-                size: 10000000,
+                size: 2000,
                 criteria,
                 sort: null
             }).subscribe(
@@ -316,5 +344,11 @@ export class TopbarComponent implements OnInit, AfterViewInit {
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
         }
+    }
+
+    ngOnDestroy(): void {
+        clearInterval(this.intervals);
+        clearInterval(this.dailyIntervals);
+        clearInterval(this.speechIntervals);
     }
 }

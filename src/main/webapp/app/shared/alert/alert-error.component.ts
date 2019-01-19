@@ -28,7 +28,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
             /*if(response.status === 504 && response.statusText === 'Gateway Timeout'){
                 this.eventManager.broadcast({ name: 'marineindustryprojApp.httpError', content: err });
             }*/
-            debugger;
+
             console.log("hello fuck you saeed");
             let i;
             const httpErrorResponse = response.content;

@@ -21,15 +21,15 @@ export class JhiAlertComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        debugger;
+
         this.alerts = this.alertService.get();
     }
 
     setClasses(alert) {
-        debugger;
-        if (alert.msg.includes("504 Gateway Timeout")) {
+
+        if (alert.msg.includes("504 Gateway Timeout") || alert.msg.includes("Http failure response for (unknown url)")) {
             this.translateService.get("error.ServerIsUnavailable").subscribe((resp) => {
-                debugger;
+
                 alert.msg = resp;
                 return {
                     toast: !!alert.toast,

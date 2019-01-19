@@ -7,13 +7,16 @@ import {
     JhiLoginModalComponent,
     HasAnyAuthorityDirective
 } from './';
+import {SearchPanelComponent} from "app/shared/search-panel/search-panel.component";
+import {NgSelectModule} from "@ng-select/ng-select";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
-    imports: [ MarineindustryprojSharedCommonModule],
-    declarations: [JhiLoginModalComponent, HasAnyAuthorityDirective],
+    imports: [ MarineindustryprojSharedCommonModule, NgSelectModule, FormsModule],
+    declarations: [JhiLoginModalComponent, SearchPanelComponent, HasAnyAuthorityDirective],
     providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
-    entryComponents: [JhiLoginModalComponent],
-    exports: [MarineindustryprojSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective],
+    entryComponents: [JhiLoginModalComponent, SearchPanelComponent],
+    exports: [MarineindustryprojSharedCommonModule, JhiLoginModalComponent, SearchPanelComponent, HasAnyAuthorityDirective],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MarineindustryprojSharedModule {}

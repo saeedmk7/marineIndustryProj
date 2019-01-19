@@ -4,8 +4,8 @@ import { Observable, of } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
-import { IUser } from './user.model';
-import {IAuthority} from "app/shared/model/authority.model";
+import {IUser, User} from './user.model';
+
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

@@ -29,6 +29,11 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
 
+    /*criteriaSubscriber: Subscription;
+    searchbarModel: SearchPanelModel[];
+    done:boolean = false;
+    criteria: any;*/
+
     constructor(
         private userService: UserService,
         private alertService: JhiAlertService,
@@ -47,19 +52,31 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
         });
+        /*this.criteriaSubscriber = this.eventManager.subscribe('marineindustryprojApp.criteria', (criteria) =>{
+            this.criteria = criteria.content;
+            this.done = true;
+            this.loadAll(criteria.content);
+
+        });*/
     }
 
     ngOnInit() {
         this.principal.identity().then(account => {
-
             this.currentAccount = account;
-            this.loadAll();
+            /*let isActiveOptions = [{id:1,title:'فعال'},{id:0,title:'غیرفعال'}];
+
+            this.searchbarModel = new Array<SearchPanelModel>();
+            this.searchbarModel.push(new SearchPanelModel('userManagement','login','text', 'contains'));
+            this.searchbarModel.push(new SearchPanelModel('userManagement','activated','select', 'equals',isActiveOptions));
+            if(!this.done)*/
+                this.loadAll();
             this.registerChangeInUsers();
         });
     }
 
     ngOnDestroy() {
         this.routeData.unsubscribe();
+        //this.eventManager.destroy(this.criteriaSubscriber);
     }
 
     registerChangeInUsers() {
@@ -82,10 +99,12 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+
         this.userService
             .query({
                 page: this.page - 1,
                 size: this.itemsPerPage,
+                //criteria,
                 sort: this.sort()
             })
             .subscribe(

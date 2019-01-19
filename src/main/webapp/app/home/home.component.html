@@ -1,14 +1,78 @@
 <div *ngIf="isAuthenticated()">
     <div class="row">
-        <div [ngSwitch]="pageName">
-            <div class="divContent" *ngSwitchCase="'home'" [@enterAnimation]>
-                <div *ngIf="isUserAndAdmin" class="div-pic-home col-lg-6">
-                    <img class="img-home" src="../../content/images/home/ShotTerm-Learning.png"/>
-                    <div (click)="changePage('niazsanjishow')" class="niazsanjiLink" > </div>
-                    <a href="#/final-niazsanji-report-marine-suffix" class="planningLink" > </a>
-                    <div (click)="changePage('niazsanjishow')" class="runningLink" > </div>
-                    <div (click)="changePage('niazsanjishow')" class="reportLink" > </div>
+        <div >
+            <div class="divContent" [@enterAnimation]>
+                <ng-container *ngIf="isUserAndAdmin" [ngSwitch]="pageName">
+                    <div class="div-pic-home col-lg-6" *ngSwitchCase="'home'"  [@enterAnimation]>
+                        <img class="img-home" src="../../content/images/home/ShotTerm-Learning.png"/>
+                        <div (click)="changePage('niazsanjishow')" class="niazsanjiLink" > </div>
+                        <a href="#/final-niazsanji-report-marine-suffix" class="planningLink" > </a>
+                        <div (click)="changePage('niazsanjishow')" class="runningLink" > </div>
+                        <div (click)="changePage('niazsanjishow')" class="reportLink" > </div>
+                    </div>
+                    <div class="div-pic-home col-lg-6" *ngSwitchCase="'niazsanjishow'" [@updownAnimation]>
+                        <div class="Item1 table-home">
+                            <table cellspacing="2" cellpadding="0" style="border:0px;">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <a class="HomeBox" href="#" style="opacity: 1;background-color: orangered;">
+                                            <img src="../../content/images/home/man.png">
+                                            <div class="HomeBoxTitle">نیازسنجی فردی</div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="HomeBox" (click)="changePage('niazsanjigroupshow')" style="opacity: 1;background-color: darkseagreen;">
+                                            <img src="../../content/images/home/reunion.png">
+                                            <div class="HomeBoxTitle">نیازسنجی گروهی</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a class="HomeBox" href="#/final-organization-niazsanji-marine-suffix" style="opacity: 1;    background-color: darkslateblue;">
+                                            <img src="../../content/images/home/teamwork.png">
+                                            <div class="HomeBoxTitle">نیازسنجی سازمانی</div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="HomeBox" href="#/final-niazsanji-report-marine-suffix" style="opacity: 1;background-color: mediumseagreen;">
+                                            <img src="../../content/images/home/archives.png">
+                                            <div class="HomeBoxTitle">گزارش پایانی نیازسنجی</div>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody></table>
+
+                        </div>
+                        <div>
+                            <button onclick="window.history.back()" class="btn btn-info">بازگشت</button>
+                        </div>
+                    </div>
+                    <div class="div-pic-home col-lg-6" *ngSwitchCase="'niazsanjigroupshow'" [@enterAnimation]>
+                    <div class="Item1 table-home">
+                        <table cellspacing="2" cellpadding="0" style="border:0px;">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <a class="HomeBox" href="#/niazsanji-group-marine-suffix" style="opacity: 1;background-color: darkseagreen;">
+                                        <img src="../../content/images/home/reunion.png">
+                                        <div class="HomeBoxTitle">تعریف گروهی دوره آموزشی</div>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="HomeBox" href="#/educational-module-job-marine-suffix" style="opacity: 1;background-color: darkslateblue;">
+                                        <img src="../../content/images/home/account.png"/>
+                                        <div class="HomeBoxTitle">تخصیص پودمان به گروه های شغلی</div>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                    <div>
+                        <button onclick="window.history.back()" class="btn btn-info">بازگشت</button>
+                    </div>
                 </div>
+                </ng-container>
+
                 <div  class="Item1 col-lg-6 table-home" [ngClass]="{'other-user-news': !isUserAndAdmin}">
                     <table *ngIf="isUserAndAdmin" cellspacing="2" cellpadding="0" style="border:0px;">
                         <tbody><tr>
@@ -95,67 +159,7 @@
                     </div>
                 </div>
             </div>
-            <div class="circle divContent" *ngSwitchCase="'niazsanjishow'" [@updownAnimation]>
-        <div class="Item1 table-home">
-            <table cellspacing="2" cellpadding="0" style="border:0px;">
-                <tbody>
-                <tr>
-                    <td>
-                        <a class="HomeBox" href="#" style="opacity: 1;background-color: orangered;">
-                            <img src="../../content/images/home/man.png">
-                            <div class="HomeBoxTitle">نیازسنجی فردی</div>
-                        </a>
-                    </td>
-                    <td>
-                        <div class="HomeBox" (click)="changePage('niazsanjigroupshow')" style="opacity: 1;background-color: darkseagreen;">
-                            <img src="../../content/images/home/reunion.png">
-                            <div class="HomeBoxTitle">نیازسنجی گروهی</div>
-                        </div>
-                    </td>
-                    <td>
-                        <a class="HomeBox" href="#/final-organization-niazsanji-marine-suffix" style="opacity: 1;    background-color: darkslateblue;">
-                            <img src="../../content/images/home/teamwork.png">
-                            <div class="HomeBoxTitle">نیازسنجی سازمانی</div>
-                        </a>
-                    </td>
-                    <td>
-                        <a class="HomeBox" href="#/final-niazsanji-report-marine-suffix" style="opacity: 1;background-color: mediumseagreen;">
-                            <img src="../../content/images/home/archives.png">
-                            <div class="HomeBoxTitle">گزارش پایانی نیازسنجی</div>
-                        </a>
-                    </td>
-                </tr>
-                </tbody></table>
 
-        </div>
-        <div>
-        <button onclick="window.history.back()" class="btn btn-info">بازگشت</button>
-        </div>
-    </div>
-            <div class="circle divContent" *ngSwitchCase="'niazsanjigroupshow'" [@enterAnimation]>
-        <div class="Item1 table-home">
-            <table cellspacing="2" cellpadding="0" style="border:0px;">
-                <tbody>
-                <tr>
-                    <td>
-                        <a class="HomeBox" href="#/niazsanji-group-marine-suffix" style="opacity: 1;background-color: darkseagreen;">
-                            <img src="../../content/images/home/reunion.png">
-                            <div class="HomeBoxTitle">تعریف گروهی دوره آموزشی</div>
-                        </a>
-                    </td>
-                    <td>
-                        <a class="HomeBox" href="#/educational-module-job-marine-suffix" style="opacity: 1;background-color: darkslateblue;">
-                            <img src="../../content/images/home/account.png"/>
-                            <div class="HomeBoxTitle">تخصیص پودمان به گروه های شغلی</div>
-                        </a>
-                    </td>
-                </tr>
-                </tbody></table>
-        </div>
-        <div>
-        <button onclick="window.history.back()" class="btn btn-info">بازگشت</button>
-        </div>
-    </div>
         </div>
 </div>
 </div>

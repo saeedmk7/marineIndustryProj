@@ -112,6 +112,7 @@ public class UserResource {
                     throw new BadRequestAlertException(ErrorConstants.PERSON_ALREADY_USED_TYPE, "Person Id already used!", "userManagement", "userexists"); //PERSON_ALREADY_USED_TYPE
             }
         }
+
             User newUser = userService.createUser(userDTO);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
