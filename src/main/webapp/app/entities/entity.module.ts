@@ -64,6 +64,8 @@ import { MarineindustryprojNavBarItemMarineSuffixModule } from './nav-bar-item-m
 import { MarineindustryprojNavBarItemAuthorityMarineSuffixModule } from './nav-bar-item-authority-marine-suffix/nav-bar-item-authority-marine-suffix.module';
 import { MarineindustryprojBeautySpeechMarineSuffixModule } from './beauty-speech-marine-suffix/beauty-speech-marine-suffix.module';
 import { MarineindustryprojUsersRequestMarineSuffixModule } from './users-request-marine-suffix/users-request-marine-suffix.module';
+import { MarineindustryprojNiazsanjiFardiMarineSuffixModule } from './niazsanji-fardi-marine-suffix/niazsanji-fardi-marine-suffix.module';
+import { MarineindustryprojRequestNiazsanjiFardiMarineSuffixModule } from './request-niazsanji-fardi-marine-suffix/request-niazsanji-fardi-marine-suffix.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -130,6 +132,8 @@ import { MarineindustryprojUsersRequestMarineSuffixModule } from './users-reques
         MarineindustryprojNavBarItemAuthorityMarineSuffixModule,
         MarineindustryprojBeautySpeechMarineSuffixModule,
         MarineindustryprojUsersRequestMarineSuffixModule,
+        MarineindustryprojNiazsanjiFardiMarineSuffixModule,
+        MarineindustryprojRequestNiazsanjiFardiMarineSuffixModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],
