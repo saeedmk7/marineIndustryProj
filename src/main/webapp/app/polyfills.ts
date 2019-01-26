@@ -56,7 +56,9 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
-
+/*if (navigator.userAgent.indexOf("MSIE 9.0") > 0) {
+    document.documentElement.className += " k-no-flexbox";
+}*/
 /**
  * Date, currency, decimal and percent pipes.
  * Needed for: All but Chrome, Firefox, Edge, IE11 and Safari 10

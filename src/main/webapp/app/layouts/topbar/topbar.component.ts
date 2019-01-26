@@ -13,8 +13,8 @@ import {PersonMarineSuffixService} from "app/entities/person-marine-suffix";
 import {PersonMarineSuffix} from "app/shared/model/person-marine-suffix.model";
 import {IBeautySpeechMarineSuffix} from "app/shared/model/beauty-speech-marine-suffix.model";
 import {BeautySpeechMarineSuffixService} from "app/entities/beauty-speech-marine-suffix";
-import {TypedOptions} from 'typed.js';
-import Typed from 'typed.js/src/typed.js';
+/*import {TypedOptions} from 'typed.js';
+import Typed from 'typed.js/src/typed.js';*/
 import {RequestStatus} from "app/shared/model/enums/RequestStatus";
 import * as $ from 'jquery';
 import {UsersRequestMarineSuffixService} from "app/entities/users-request-marine-suffix";
@@ -231,7 +231,7 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
         typed.start();*/
     }
     currentType: number = 0;
-    changeTyping(){
+    /*changeTyping(){
 
         $("#typing").remove();
         $("#typingDiv").append("<div id=\"typing\"></div>");
@@ -258,7 +258,7 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         let typed = new Typed("#typing", options);
         typed.start();
-    }
+    }*/
 
 
     getNewRequestOrganization() {

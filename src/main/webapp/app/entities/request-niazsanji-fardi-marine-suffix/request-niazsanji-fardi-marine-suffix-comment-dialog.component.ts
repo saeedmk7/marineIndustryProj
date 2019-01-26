@@ -91,6 +91,10 @@ export class RequestNiazsanjiFardiMarineSuffixCommentDialogComponent implements 
                     this.isSaving = false;
                     return;
                 }
+                if(this.requestNiazsanjiFardi.status == 5)
+                    this.requestNiazsanjiFardi.status = 6;
+                if(this.requestNiazsanjiFardi.status == 10)
+                    this.requestNiazsanjiFardi.status = 11;
                 this.requestNiazsanjiFardi.conversation += " رد درخواست توسط " + currentUserFullName + " در تاریخ: " + this.convertObjectDatesService.miladi2Shamsi(new Date()) + " انجام شد. ";
                 this.requestNiazsanjiFardi.conversation += "\n";
                 this.requestNiazsanjiFardi.conversation += currentUserFullName + ": " + this.comment;
@@ -105,8 +109,9 @@ export class RequestNiazsanjiFardiMarineSuffixCommentDialogComponent implements 
                     this.requestNiazsanjiFardi.conversation += currentUserFullName + ": " + this.comment;
                 }
                 if(this.isModirGhesmat)
-                    this.requestNiazsanjiFardi.status = 6;
+                    this.requestNiazsanjiFardi.status = 10;
                 if(this.isOther){
+                    this.requestNiazsanjiFardi.status = 20;
                     this.requestNiazsanjiFardiService.finalize(this.requestNiazsanjiFardi).subscribe(
                         (res: HttpResponse<IFinalOrganizationNiazsanjiMarineSuffix>) => this.onSaveSuccess(),
                         (res: HttpErrorResponse) => this.onSaveError(res)
