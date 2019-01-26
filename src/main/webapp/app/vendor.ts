@@ -69,7 +69,8 @@ import {
     faKey,
     faComments,
     faMarker,
-    faStickyNote
+    faStickyNote,
+    faLightbulb
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -138,5 +139,6 @@ library.add(faKey);
 library.add(faComments);
 library.add(faMarker);
 library.add(faStickyNote);
+library.add(faLightbulb);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

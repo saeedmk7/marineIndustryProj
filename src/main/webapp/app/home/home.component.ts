@@ -15,6 +15,8 @@ import {ConvertObjectDatesService} from "app/plugin/utilities/convert-object-dat
 import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import * as $ from 'jquery';
+import {IPersonMarineSuffix} from "app/shared/model/person-marine-suffix.model";
+import {PersonMarineSuffixService} from "app/entities/person-marine-suffix";
 
 
 @Component({
@@ -39,8 +41,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
     pageName: string;
     isUserAndAdmin: boolean;
+    badError: string;
     constructor(
         private principal: Principal,
+        private personService: PersonMarineSuffixService,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
         private languageManager: JhiLanguageService,
@@ -101,11 +105,18 @@ export class HomeComponent implements OnInit, OnDestroy {
             if(!this.isAuthenticated()){
                 this.login();
             }
-             const authorities: string[] = ['ROLE_ADMIN'];
-            for (let i = 0; i < authorities.length; i++) {
-                if (this.account.authorities.includes(authorities[i])) {
-                    this.isUserAndAdmin = true;
-                }
+            if(this.account.authorities.find(a => a == "ROLE_ADMIN") !== undefined)
+                this.isUserAndAdmin = true;
+
+            if(!this.account.personId){
+                this.badError = "برای کاربری شما فردی تخصیص داده نشده لطفا با مدیریت سامانه تماس بگیرید و مراتب را اطلاع دهید.";
+            }
+            else{
+                this.personService.find(this.account.personId).subscribe((resp: HttpResponse<IPersonMarineSuffix>) => {
+                    if(!resp.body.organizationChartId){
+                        this.badError = "موقعیت در چارت سازمانی برای شما تنظیم نشده است، لطفا مراتب را با مدیریت سامانه در میان بگذارید.";
+                    }
+                })
             }
         });
         this.registerAuthenticationSuccess();

@@ -7,3 +7,7 @@ tr.ignore td {
 tr.new td {
     color: blue;
 }
+
+.ng-select > div {
+    z-index: 2;
+}

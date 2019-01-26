@@ -1,6 +1,23 @@
 /* ==========================================================================
 Main page styles
 ========================================================================== */
+
+.niazsanjiPage {
+    width: 100%;
+}
+
+.niazsanjiPage table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+.niazsanjiPage .HomeBox {
+    width: 100%;
+    text-align: center;
+}
+
 .other-user-news {
     position: fixed !important;
     bottom: 0;

@@ -49,6 +49,7 @@
     "ng2-jalali-date-picker": "^2.2.6",
     "ngx-cookie": "2.0.1",
     "ngx-infinite-scroll": "0.5.1",
+    "ngx-treeview": "^6.0.2",
     "ngx-webstorage": "2.0.1",
     "reflect-metadata": "0.1.12",
     "rxjs": "6.1.0",

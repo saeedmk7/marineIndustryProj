@@ -103,6 +103,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
     }
 
     setClasses(alert) {
+
         return {
             toast: !!alert.toast,
             [alert.position]: true

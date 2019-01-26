@@ -112,6 +112,7 @@ export class UserMgmtUpdateComponent implements OnInit {
     }
 
     private onSaveError(response: HttpErrorResponse) {
+
         this.isSaving = false;
         if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
             this.error = true;

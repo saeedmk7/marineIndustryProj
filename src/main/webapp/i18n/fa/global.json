@@ -160,9 +160,13 @@
             "reject": "رد کردن",
             "report": "گزارش گرفتن",
             "openreport": "نمایش گزارش",
-            "setpermission": "تخصیص دسترسی"
-
-
+            "setpermission": "تخصیص دسترسی",
+            "completeAndRunning": "اجرا کردن",
+            "comment":{
+                "accept": "تایید کردن",
+                "reject": "رد کردن",
+                "comment": "ثبت نظر"
+            }
         },
         "detail": {
             "field": "فیلد",
@@ -170,6 +174,11 @@
         },
         "delete": {
             "title": "تصدیق عملیات حذف"
+        },
+        "comment":{
+            "accept": "عملیات تایید درخواست",
+            "reject": "عملیات رد کردن درخواست",
+            "comment": "عملیات اعلام نظر روی درخواست"
         },
         "validation": {
             "required": "وارد کردن این فیلد ضروری است",

@@ -2,6 +2,11 @@
     <div class="row">
         <div >
             <div class="divContent" [@enterAnimation]>
+                <div *ngIf="badError" class="row alert alert-danger">
+                    <span class="text-center">
+                    {{badError}}
+                        </span>
+                </div>
                 <ng-container *ngIf="isUserAndAdmin" [ngSwitch]="pageName">
                     <div class="div-pic-home col-lg-6" *ngSwitchCase="'home'"  [@enterAnimation]>
                         <img class="img-home" src="../../content/images/home/ShotTerm-Learning.png"/>
@@ -11,32 +16,35 @@
                         <div (click)="changePage('niazsanjishow')" class="reportLink" > </div>
                     </div>
                     <div class="div-pic-home col-lg-6" *ngSwitchCase="'niazsanjishow'" [@updownAnimation]>
-                        <div class="Item1 table-home">
+                        <div class="Item1 table-home niazsanjiPage">
                             <table cellspacing="2" cellpadding="0" style="border:0px;">
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <a class="HomeBox" href="#" style="opacity: 1;background-color: orangered;">
+                                        <a class="HomeBox" href="#/request-niazsanji-fardi-marine-suffix" style="opacity: 1;background-color: orangered;">
                                             <img src="../../content/images/home/man.png">
-                                            <div class="HomeBoxTitle">نیازسنجی فردی</div>
+                                            <div class="HomeBoxTitle">درخواست نیازسنجی فردی</div>
                                         </a>
                                     </td>
                                     <td>
-                                        <div class="HomeBox" (click)="changePage('niazsanjigroupshow')" style="opacity: 1;background-color: darkseagreen;">
-                                            <img src="../../content/images/home/reunion.png">
-                                            <div class="HomeBoxTitle">نیازسنجی گروهی</div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a class="HomeBox" href="#/final-organization-niazsanji-marine-suffix" style="opacity: 1;    background-color: darkslateblue;">
-                                            <img src="../../content/images/home/teamwork.png">
-                                            <div class="HomeBoxTitle">نیازسنجی سازمانی</div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="HomeBox" href="#/final-niazsanji-report-marine-suffix" style="opacity: 1;background-color: mediumseagreen;">
+                                        <a class="HomeBox" href="#/niazsanji-fardi-marine-suffix" style="opacity: 1;background-color: darkseagreen;">
                                             <img src="../../content/images/home/archives.png">
-                                            <div class="HomeBoxTitle">گزارش پایانی نیازسنجی</div>
+                                            <div class="HomeBoxTitle">فهرست نهایی شده نیازسنجی فردی</div>
+                                        </a>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a class="HomeBox" href="#/request-organization-niazsanji-marine-suffix" style="opacity: 1;    background-color: darkslateblue;">
+                                            <img src="../../content/images/home/teamwork.png">
+                                            <div class="HomeBoxTitle">تعریف دوره های متمرکز</div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="HomeBox" href="#/final-organization-niazsanji-marine-suffix" style="opacity: 1;background-color: mediumseagreen;">
+                                            <img src="../../content/images/home/archives.png">
+                                            <div class="HomeBoxTitle">فهرست نهایی شده دوره های متمرکز</div>
                                         </a>
                                     </td>
                                 </tr>
@@ -48,7 +56,7 @@
                         </div>
                     </div>
                     <div class="div-pic-home col-lg-6" *ngSwitchCase="'niazsanjigroupshow'" [@enterAnimation]>
-                    <div class="Item1 table-home">
+                    <div class="Item1 table-home niazsanjiPage">
                         <table cellspacing="2" cellpadding="0" style="border:0px;">
                             <tbody>
                             <tr>

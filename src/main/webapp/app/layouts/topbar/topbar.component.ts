@@ -20,6 +20,7 @@ import * as $ from 'jquery';
 import {UsersRequestMarineSuffixService} from "app/entities/users-request-marine-suffix";
 import {RequestEducationalModuleMarineSuffixService} from "app/entities/request-educational-module-marine-suffix";
 import {SlideInOutAnimation} from "app/shared/animations";
+import {RequestNiazsanjiFardiMarineSuffixService} from "app/entities/request-niazsanji-fardi-marine-suffix";
 
 @Component({
     selector: 'mi-topbar',
@@ -36,7 +37,8 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
     version: string;
     counter: number;
     usersRequestCounter: number;
-    EducationalModuleRequestCounter: number;
+    /*EducationalModuleRequestCounter: number;*/
+    niazSanjiFardiRequestCounter: number;
     imgUrl: string = "";
     currentUserFullName: string;
     jobTitle: string;
@@ -49,6 +51,9 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
     speechIntervals: any;
     currentSpeech: string;
     show: boolean = true;
+
+    badError: string;
+    currentUser: any;
     constructor(
         private userService: UserService,
         private personMarineSuffixService: PersonMarineSuffixService,
@@ -63,6 +68,7 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
         private jhiAlertService: JhiAlertService,
         private beautySpeechService: BeautySpeechMarineSuffixService,
         private usersRequestMarineSuffixService: UsersRequestMarineSuffixService,
+        private requestNiazsanjiFardiMarineService: RequestNiazsanjiFardiMarineSuffixService,
         private requestEducationalModuleMarineSuffixService: RequestEducationalModuleMarineSuffixService
 
     ) {
@@ -111,7 +117,7 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
         this.principal.identity().then(account => {
-
+            this.currentUser = account;
             if(account) {
                 if(account.authorities.find(a => a == "ROLE_ADMIN") !== undefined)
                     this.isAdmin = true;
@@ -122,10 +128,7 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.imgUrl = "../../../content/images/home/man.png";
                 }
                 if (account.login) {
-                    this.userService.find(account.login).subscribe(
-                        (res: HttpResponse<User>) => this.onSuccess(res.body),
-                        (res: HttpResponse<any>) => this.onError(res.body)
-                    );
+                    this.fillPerson(account);
                 }
                 else {
                     window.location.reload();
@@ -135,11 +138,16 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.imgUrl = "../../../content/images/home/man.png";
             }
             if(this.isAdmin) {
+                this.getNewRequestOrganization();
+                this.getNewUsersRequest();
+                this.getNewNiazSanjiFardiRequest();
                 this.intervals = setInterval(() => {         //replaced function() by ()=>
                     this.getNewRequestOrganization();
                     this.getNewUsersRequest();
-                    this.getNewEducationalModuleRequest();
-                }, 30000);
+                    this.getNewNiazSanjiFardiRequest();
+                    this.checkCurrentFullName();
+                    /*this.getNewEducationalModuleRequest();*/
+                }, 10000);
                 /*setInterval(this.getNewRequestOrganization(),30000);
                 setInterval(this.getNewUsersRequest(),20000);
                 setInterval(this.getNewEducationalModuleRequest(),40000);*/
@@ -150,19 +158,25 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
     }
-    onSuccess(body) {
-        this.user = body;
-        if (this.user.personId) {
-            this.personMarineSuffixService.find(this.user.personId).subscribe(
+    fillPerson(account) {
+        if (account.personId) {
+
+            this.personMarineSuffixService.find(account.personId).subscribe(
                 (res: HttpResponse<PersonMarineSuffix>) => this.onPersonSuccess(res.body),
                 (res: HttpResponse<any>) => this.onPersonError(res.body)
             )
         }
         else {
-            this.currentUserFullName = this.user.login;
+            this.badError = "برای کاربری شما فردی تخصیص داده نشده لطفا با مدیریت سامانه تماس بگیرید و مراتب را اطلاع دهید.";
+            this.currentUserFullName = account.login;
         }
     }
-
+    checkCurrentFullName(){
+        let fullName = document.getElementById("currenUserFullNameTopBar").innerText;
+        if(fullName != this.currentUserFullName){
+            this.fillPerson(this.currentUser);
+        }
+    }
     onPersonSuccess(body) {
         this.person = body;
         if (this.person) {
@@ -268,7 +282,6 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onError(str) {
-
         this.jhiAlertService.error(str);
     }
 
@@ -326,7 +339,26 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
             );
         }
     }
-    private getNewEducationalModuleRequest() {
+    private getNewNiazSanjiFardiRequest() {
+        if (this.isAuthenticated()) {
+            let criteria = [
+                {key: 'requestStatus.equals', value: RequestStatus.NEW}
+            ];
+            this.requestNiazsanjiFardiMarineService.count({
+                page: 0,
+                size: 2000,
+                criteria,
+                sort: null
+            }).subscribe(
+                (res: HttpResponse<any>) => {
+                    //localStorage.setItem('usersRequestCount', res.body);
+                    this.niazSanjiFardiRequestCounter = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+        }
+    }
+    /*private getNewEducationalModuleRequest() {
         if (this.isAuthenticated()) {
             let criteria = [
                 {key: 'requestStatus.equals', value: RequestStatus.NEW}
@@ -344,7 +376,7 @@ export class TopbarComponent implements OnInit, AfterViewInit, OnDestroy {
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
         }
-    }
+    }*/
 
     ngOnDestroy(): void {
         clearInterval(this.intervals);
