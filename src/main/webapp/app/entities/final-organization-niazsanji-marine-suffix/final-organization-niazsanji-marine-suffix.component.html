@@ -1,0 +1,167 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.home.title">Final Organization Niazsanjis</span>
+        <!--<button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-final-organization-niazsanji-marine-suffix" [routerLink]="['/final-organization-niazsanji-marine-suffix/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.home.createLabel">
+            Create new Final Organization Niazsanji
+            </span>
+        </button>-->
+        <button class="btn btn-info float-left" jhiTranslate="entity.action.getexcel" (click)="export()">
+            <span class="fa fa-file-excel-o"></span>
+            excel
+        </button>
+    </h2>
+    <mi-alert></mi-alert>
+    <div class="row">
+        <search-panel class="col-md-12" [searchPanelModel]="searchbarModel"></search-panel>
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="finalOrganizationNiazsanjis">
+        <table class="table table-striped  table-bordered table-hover table-sm">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+                <th>ردیف</th>
+            <th jhiSortBy="code"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.code">Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="recommendedByOrgchart"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.recommendedByOrgchart">Recommended By Orgchart</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="neededSoftwares"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.neededSoftwares">Needed Softwares</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="neededHardware"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.neededHardware">Needed Hardware</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th jhiSortBy="studentsType"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.studentsType">Students Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="teacherName"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.teacherName">Teacher Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="teacherMobile"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.teacherMobile">Teacher Mobile</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+                <th jhiSortBy="teacherFamily"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.teacher">Teacher</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="requestStatus"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.requestStatus">Request Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="changeStatusUserLogin"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.changeStatusUserLogin">Change Status User Login</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="trainingGoals"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.trainingGoals">Training Goals</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th jhiSortBy="priceCost"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.priceCost">Price Cost</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="createUserLogin"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.createUserLogin">Create User Login</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createDate"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.createDate">Create Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="modifyUserLogin"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.modifyUserLogin">Modify User Login</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="modifyDate"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.modifyDate">Modify Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="archived"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.archived">Archived</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="archivedUserLogin"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.archivedUserLogin">Archived User Login</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="archivedDate"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.archivedDate">Archived Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="status"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.status">Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th jhiSortBy="createDate"><span jhiTranslate="marineindustryprojApp.requestOrganizationNiazsanji.createDate">Create Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="educationalModuleTitle"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.educationalModule">Educational Module</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!--<th jhiSortBy="teachApproachTitle"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.teachApproach">Teach Approach</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="requestOrganizationNiazsanjiRecommendedByOrgchart"><span jhiTranslate="marineindustryprojApp.finalOrganizationNiazsanji.requestOrganizationNiazsanji">Request Organization Niazsanji</span> <fa-icon [icon]="'sort'"></fa-icon></th>-->
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let finalOrganizationNiazsanji of finalOrganizationNiazsanjis ; let i = index;">
+                <!--<td><a [routerLink]="['/final-organization-niazsanji-marine-suffix', finalOrganizationNiazsanji.id, 'view' ]">{{finalOrganizationNiazsanji.id}}</a></td>-->
+                <td>{{i+1}}</td>
+                <td>{{finalOrganizationNiazsanji.code}}</td>
+                <td>{{finalOrganizationNiazsanji.recommendedByOrgchart}}</td>
+                <!--<td>{{finalOrganizationNiazsanji.neededSoftwares}}</td>
+                <td>{{finalOrganizationNiazsanji.neededHardware}}</td>-->
+                <td>{{finalOrganizationNiazsanji.studentsType}}</td>
+                <!--<td>{{finalOrganizationNiazsanji.teacherName}}</td>
+                <td>{{finalOrganizationNiazsanji.teacherMobile}}</td>
+                <td jhiTranslate="{{'marineindustryprojApp.RequestStatus.' + finalOrganizationNiazsanji.requestStatus}}">{{finalOrganizationNiazsanji.requestStatus}}</td>
+                <td>{{finalOrganizationNiazsanji.changeStatusUserLogin}}</td>
+                <td>{{finalOrganizationNiazsanji.trainingGoals}}</td>
+                <td>{{finalOrganizationNiazsanji.description}}</td>-->
+                <td>
+                    <div *ngIf="finalOrganizationNiazsanji.teacherId">
+                        <a [routerLink]="['../teacher-marine-suffix', finalOrganizationNiazsanji.teacherId , 'view' ]" >{{finalOrganizationNiazsanji.teacherFamily}}</a>
+                    </div>
+                </td>
+                <td>{{finalOrganizationNiazsanji.priceCost}}</td>
+                <td>{{finalOrganizationNiazsanji.createDate}}</td>
+                <!--<td>{{finalOrganizationNiazsanji.createUserLogin}}</td>
+                <td>{{finalOrganizationNiazsanji.createDate | date:'medium'}}</td>
+                <td>{{finalOrganizationNiazsanji.modifyUserLogin}}</td>
+                <td>{{finalOrganizationNiazsanji.modifyDate | date:'medium'}}</td>
+                <td>{{finalOrganizationNiazsanji.archived}}</td>
+                <td>{{finalOrganizationNiazsanji.archivedUserLogin}}</td>
+                <td>{{finalOrganizationNiazsanji.archivedDate | date:'medium'}}</td>
+                <td>{{finalOrganizationNiazsanji.status}}</td>-->
+
+                <td>
+                    <div *ngIf="finalOrganizationNiazsanji.educationalModuleId">
+                        <a [routerLink]="['../educational-module-marine-suffix', finalOrganizationNiazsanji.educationalModuleId , 'view' ]" >{{finalOrganizationNiazsanji.educationalModuleTitle}}</a>
+                    </div>
+                </td>
+                <!--<td>
+                    <div *ngIf="finalOrganizationNiazsanji.teachApproachId">
+                        <a [routerLink]="['../teach-approach-marine-suffix', finalOrganizationNiazsanji.teachApproachId , 'view' ]" >{{finalOrganizationNiazsanji.teachApproachTitle}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="finalOrganizationNiazsanji.requestOrganizationNiazsanjiId">
+                        <a [routerLink]="['../request-organization-niazsanji-marine-suffix', finalOrganizationNiazsanji.requestOrganizationNiazsanjiId , 'view' ]" >{{finalOrganizationNiazsanji.requestOrganizationNiazsanjiRecommendedByOrgchart}}</a>
+                    </div>
+                </td>-->
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+
+                        <button *ngIf="finalOrganizationNiazsanji.status == 0" type="submit"
+                                [routerLink]="['../document-marine-suffix', 'finalorganizationniazsanji',finalOrganizationNiazsanji.id ]"
+                                class="btn btn-light btn-sm">
+                            <span class="fa fa-file"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.documents">Documents</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/final-organization-niazsanji-marine-suffix', finalOrganizationNiazsanji.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <!--<button *ngIf="finalOrganizationNiazsanji.status == 0" type="submit"
+                                [routerLink]="['/final-organization-niazsanji-marine-suffix', finalOrganizationNiazsanji.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>-->
+                        <button *ngIf="finalOrganizationNiazsanji.status == 0" type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'final-organization-niazsanji-marine-suffix/'+ finalOrganizationNiazsanji.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                        <button *ngIf="finalOrganizationNiazsanji.status == 0 && isAdmin" type="submit" (click)="complete(finalOrganizationNiazsanji)"
+                                class="btn btn-success btn-sm">
+                            <span class="fa fa-check" color="f00c"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.completeAndRunning">complete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4">
+                    <select [(ngModel)] = "itemsPerPage" (change)="loadAll()">
+                        <option value="10">۱۰</option>
+                        <option selected="selected" value="20">۲۰</option>
+                        <option value="50">۵۰</option>
+                        <option value="100">۱۰۰</option>
+                        <option value="500">۵۰۰</option>
+                    </select>
+                    <div class="row justify-content-center">
+                        <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                    </div>
+                </td>
+
+                <td colspan="10">
+                    <div *ngIf="finalOrganizationNiazsanjis && finalOrganizationNiazsanjis.length">
+
+                        <div class="row justify-content-center">
+                            <ngb-pagination [collectionSize]="totalItems" [maxSize]="5" [pageSize]="itemsPerPage" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            </tfoot>
+        </table>
+    </div>
+
+</div>
